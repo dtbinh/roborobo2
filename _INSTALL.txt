@@ -20,7 +20,7 @@
 2. Build and run:
 - Linux:
 	- open a terminal, and enter the following commands:
-	- "./makefile-manager"
+	- "./makefile-manager -l"
 	- "make" (or, if you have multiple processors: "make -jXX", with XX=nb_of_processors)
 	- "./roborobo -l config/default-wander_bigrobots.properties"
 - MacOSX: use XCode project
