@@ -30,3 +30,11 @@ bool DemoMedeaSharedData::gSnapshots = true; // take snapshots
 int DemoMedeaSharedData::gSnapshotsFrequency = 50; // every N generations
 
 int DemoMedeaSharedData::gControllerType = -1; // cf. header for description
+
+bool DemoMedeaSharedData::gLimitGenomeTransmission = false; // default: do not limit.
+int DemoMedeaSharedData::gMaxNbGenomeTransmission = 65535; // default: arbitrarily set to 65535.
+
+int DemoMedeaSharedData::gSelectionMethod = 0; // default: random selection
+
+int DemoMedeaSharedData::gNotListeningStateDelay = 0;    // -1: infinite ; 0: no delay ; >0: delay
+int DemoMedeaSharedData::gListeningStateDelay = -1;      // -1: infinite ; 0: no delay ; >0: delay (ignored if gNotListeningStateDelay=-1)

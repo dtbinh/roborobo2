@@ -23,71 +23,75 @@ using namespace Neural;
 
 class DemoMedeaController : public Controller
 {
-	private:
-		int _iteration;
-        int _birthdate; // evaluation when this controller was initialized.
+private:
+    int _iteration;
+    int _birthdate; // evaluation when this controller was initialized.
     
-
-		std::vector<double> _parameters;
-		std::string _nnType;
-		std::vector<int> _nbHiddenNeuronsPerLayer;
-		std::vector<int> _nbBiaisNeuronsPerLayer;
-		NeuralNetwork* nn;
-
-		void createNN();
+    bool _isListening;
+    int _notListeningDelay;
+    int _listeningDelay;
     
-        //bool _isAlive; // agent stand still if not.
-        bool _isNewGenome;
+    int _nbGenomeTransmission;
     
-        void selectRandomGenome();
-        void mutate(float sigma);
-
-        void stepBehaviour();
-        void stepEvolution();
+    std::vector<double> _parameters;
+    std::string _nnType;
+    std::vector<int> _nbHiddenNeuronsPerLayer;
+    std::vector<int> _nbBiaisNeuronsPerLayer;
+    NeuralNetwork* nn;
     
-        void broadcastGenome();
-        void loadNewGenome();
+    void createNN();
     
-        unsigned int computeRequiredNumberOfWeights();
+    //bool _isAlive; // agent stand still if not.
+    bool _isNewGenome;
     
-//        void setAliveStatus( bool isAlive ) { _isAlive = isAlive; }
-        bool getNewGenomeStatus() { return _isNewGenome; }
-        void setNewGenomeStatus( bool __status ) { _isNewGenome = __status; }
+    void selectRandomGenome();
+    void selectFirstGenome();
     
-        // evolutionary engine
-        std::vector<double> _genome; // todo: accessing
-        std::map<int, std::vector<double> > _genomesList;
-        std::map<int, float > _sigmaList;
-        std::map<int,int> _birthdateList; // store the birthdate of the received controllers (useful for monitoring).
-        std::vector<double> _currentGenome;
-        float _currentSigma;
+    void mutate(float sigma);
     
-        // ANN
-        double _minValue;
-        double _maxValue;
-        unsigned int _nbInputs;
-        unsigned int _nbOutputs;
-        unsigned int _nbHiddenLayers;
-        std::vector<unsigned int>* _nbNeuronsPerHiddenLayer;
+    void stepBehaviour();
+    void stepEvolution();
     
-        void storeGenome(std::vector<double> genome, int senderId, int senderBirthdate, float sigma);
-        void resetRobot();
+    void broadcastGenome();
+    void loadNewGenome();
     
-	public:
-
-        DemoMedeaController(RobotWorldModel *wm);
-		~DemoMedeaController();
-
-		void reset();
-		void step();
+    unsigned int computeRequiredNumberOfWeights();
     
-        int getBirthdate() { return _birthdate; }
+    //        void setAliveStatus( bool isAlive ) { _isAlive = isAlive; }
+    bool getNewGenomeStatus() { return _isNewGenome; }
+    void setNewGenomeStatus( bool __status ) { _isNewGenome = __status; }
     
-        //bool isAlive() { return _isAlive; }
-
-
+    // evolutionary engine
+    std::vector<double> _genome; // todo: accessing
+    std::map<int, std::vector<double> > _genomesList;
+    std::map<int, float > _sigmaList;
+    std::map<int,int> _birthdateList; // store the birthdate of the received controllers (useful for monitoring).
+    std::vector<double> _currentGenome;
+    float _currentSigma;
     
-
+    // ANN
+    double _minValue;
+    double _maxValue;
+    unsigned int _nbInputs;
+    unsigned int _nbOutputs;
+    unsigned int _nbHiddenLayers;
+    std::vector<unsigned int>* _nbNeuronsPerHiddenLayer;
+    
+    bool storeGenome(std::vector<double> genome, int senderId, int senderBirthdate, float sigma);
+    void resetRobot();
+    
+public:
+    
+    DemoMedeaController(RobotWorldModel *wm);
+    ~DemoMedeaController();
+    
+    void reset();
+    void step();
+    
+    int getBirthdate() { return _birthdate; }
+    
+    bool isListening() { return _isListening; }
+    
 };
 
 

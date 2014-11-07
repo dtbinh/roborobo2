@@ -4,7 +4,6 @@
 #include "Config/BasicProjectConfigurationLoader.h"
 #include "Config/DemoMedeaConfigurationLoader.h"
 #include "Config/SandboxConfigurationLoader.h"
-#include "Config/PrjMateSelectionConfigurationLoader.h"
 //###DO-NOT-DELETE-THIS-LINE###TAG:INCLUDE###//
 
 
@@ -40,12 +39,6 @@ ConfigurationLoader* ConfigurationLoader::make_ConfigurationLoader (std::string 
 	else if (configurationLoaderObjectName == "SandboxConfigurationLoader" )
 	{
 		return new SandboxConfigurationLoader();
-	}
-#endif
-#if defined PRJ_PRJMATESELECTION || !defined MODULAR
-	else if (configurationLoaderObjectName == "PrjMateSelectionConfigurationLoader" )
-	{
-		return new PrjMateSelectionConfigurationLoader();
 	}
 #endif
     //###DO-NOT-DELETE-THIS-LINE###TAG:SWITCH###//

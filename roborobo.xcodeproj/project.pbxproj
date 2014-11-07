@@ -21,11 +21,6 @@
 		370DD55A18E497620084BE83 /* DemoMedeaSharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370DD55418E497620084BE83 /* DemoMedeaSharedData.cpp */; };
 		370DD55B18E497620084BE83 /* DemoMedeaWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370DD55518E497620084BE83 /* DemoMedeaWorldObserver.cpp */; };
 		370DD55E18E4A4390084BE83 /* Graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 370DD55D18E4A4390084BE83 /* Graphics.cpp */; };
-		371E5C3419DC44A3009C31B9 /* PrjMateSelectionAgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371E5C3019DC44A3009C31B9 /* PrjMateSelectionAgentObserver.cpp */; };
-		371E5C3519DC44A3009C31B9 /* PrjMateSelectionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371E5C3119DC44A3009C31B9 /* PrjMateSelectionController.cpp */; };
-		371E5C3619DC44A3009C31B9 /* PrjMateSelectionSharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371E5C3219DC44A3009C31B9 /* PrjMateSelectionSharedData.cpp */; };
-		371E5C3719DC44A3009C31B9 /* PrjMateSelectionWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371E5C3319DC44A3009C31B9 /* PrjMateSelectionWorldObserver.cpp */; };
-		371E5C3919DC44CD009C31B9 /* PrjMateSelectionConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 371E5C3819DC44CD009C31B9 /* PrjMateSelectionConfigurationLoader.cpp */; };
 		3720BD0E0F7D149100D5FF81 /* Agent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3720BCD40F7D149100D5FF81 /* Agent.cpp */; };
 		3720BD0F0F7D149100D5FF81 /* AgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3720BCD50F7D149100D5FF81 /* AgentObserver.cpp */; };
 		3720BD100F7D149100D5FF81 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3720BCD60F7D149100D5FF81 /* Controller.cpp */; };
@@ -119,16 +114,6 @@
 		370DD55418E497620084BE83 /* DemoMedeaSharedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DemoMedeaSharedData.cpp; sourceTree = "<group>"; };
 		370DD55518E497620084BE83 /* DemoMedeaWorldObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DemoMedeaWorldObserver.cpp; sourceTree = "<group>"; };
 		370DD55D18E4A4390084BE83 /* Graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Graphics.cpp; sourceTree = "<group>"; };
-		371E5C2B19DC44A3009C31B9 /* PrjMateSelectionAgentObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrjMateSelectionAgentObserver.h; sourceTree = "<group>"; };
-		371E5C2C19DC44A3009C31B9 /* PrjMateSelectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrjMateSelectionController.h; sourceTree = "<group>"; };
-		371E5C2D19DC44A3009C31B9 /* PrjMateSelectionSharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrjMateSelectionSharedData.h; sourceTree = "<group>"; };
-		371E5C2E19DC44A3009C31B9 /* PrjMateSelectionWorldObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrjMateSelectionWorldObserver.h; sourceTree = "<group>"; };
-		371E5C3019DC44A3009C31B9 /* PrjMateSelectionAgentObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrjMateSelectionAgentObserver.cpp; sourceTree = "<group>"; };
-		371E5C3119DC44A3009C31B9 /* PrjMateSelectionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrjMateSelectionController.cpp; sourceTree = "<group>"; };
-		371E5C3219DC44A3009C31B9 /* PrjMateSelectionSharedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrjMateSelectionSharedData.cpp; sourceTree = "<group>"; };
-		371E5C3319DC44A3009C31B9 /* PrjMateSelectionWorldObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrjMateSelectionWorldObserver.cpp; sourceTree = "<group>"; };
-		371E5C3819DC44CD009C31B9 /* PrjMateSelectionConfigurationLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrjMateSelectionConfigurationLoader.cpp; sourceTree = "<group>"; };
-		371E5C3A19DC44F5009C31B9 /* PrjMateSelectionConfigurationLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrjMateSelectionConfigurationLoader.h; sourceTree = "<group>"; };
 		3720BCD40F7D149100D5FF81 /* Agent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Agent.cpp; sourceTree = "<group>"; };
 		3720BCD50F7D149100D5FF81 /* AgentObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AgentObserver.cpp; sourceTree = "<group>"; };
 		3720BCD60F7D149100D5FF81 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
@@ -351,7 +336,6 @@
 				3730415418EB1C8F0086A449 /* libtbb.dylib */,
 				370DD54818E497620084BE83 /* DemoMedea */,
 				374E0CEF11AECDDC0003E446 /* BasicProject */,
-				371E5C2919DC44A3009C31B9 /* PrjMateSelection */,
 				3749E17B195D809C00DC68AA /* Sandbox */,
 			);
 			path = prj;
@@ -407,41 +391,9 @@
 				37F3D9231909BB2D0093536D /* ConfigurationLoader.h */,
 				3749E189195D824900DC68AA /* BasicProjectConfigurationLoader.h */,
 				372B8E4D137B303B00E7276B /* DemoMedeaConfigurationLoader.h */,
-				371E5C3A19DC44F5009C31B9 /* PrjMateSelectionConfigurationLoader.h */,
 				37764932195D9A34003D82E3 /* SandboxConfigurationLoader.h */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		371E5C2919DC44A3009C31B9 /* PrjMateSelection */ = {
-			isa = PBXGroup;
-			children = (
-				371E5C2A19DC44A3009C31B9 /* include */,
-				371E5C2F19DC44A3009C31B9 /* src */,
-			);
-			path = PrjMateSelection;
-			sourceTree = "<group>";
-		};
-		371E5C2A19DC44A3009C31B9 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				371E5C2B19DC44A3009C31B9 /* PrjMateSelectionAgentObserver.h */,
-				371E5C2C19DC44A3009C31B9 /* PrjMateSelectionController.h */,
-				371E5C2D19DC44A3009C31B9 /* PrjMateSelectionSharedData.h */,
-				371E5C2E19DC44A3009C31B9 /* PrjMateSelectionWorldObserver.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		371E5C2F19DC44A3009C31B9 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				371E5C3019DC44A3009C31B9 /* PrjMateSelectionAgentObserver.cpp */,
-				371E5C3119DC44A3009C31B9 /* PrjMateSelectionController.cpp */,
-				371E5C3219DC44A3009C31B9 /* PrjMateSelectionSharedData.cpp */,
-				371E5C3319DC44A3009C31B9 /* PrjMateSelectionWorldObserver.cpp */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		3720BCD20F7D149100D5FF81 /* src */ = {
@@ -493,7 +445,6 @@
 				37F4E7E4190BF88500E6EA45 /* GateObject.cpp */,
 				37ECDD16136AF6370037E7CE /* LandmarkObject.cpp */,
 				37F3D927190A5E5D0093536D /* PhysicalObjectFactory.cpp */,
-				371E5C3819DC44CD009C31B9 /* PrjMateSelectionConfigurationLoader.cpp */,
 				37F3D92C190A7BA70093536D /* RoundObject.cpp */,
 				37764933195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp */,
 				37F4E7E6190C02F900E6EA45 /* SwitchObject.cpp */,
@@ -792,20 +743,17 @@
 				3720BD170F7D149100D5FF81 /* RobotWorldModel.cpp in Sources */,
 				3720BD1B0F7D149100D5FF81 /* Timer.cpp in Sources */,
 				37F3D92D190A7BA70093536D /* RoundObject.cpp in Sources */,
-				371E5C3719DC44A3009C31B9 /* PrjMateSelectionWorldObserver.cpp in Sources */,
 				3720BD1D0F7D149100D5FF81 /* World.cpp in Sources */,
 				37F3D928190A5E5D0093536D /* PhysicalObjectFactory.cpp in Sources */,
 				3720BD1E0F7D149100D5FF81 /* WorldObserver.cpp in Sources */,
 				3720BD1F0F7D149100D5FF81 /* WorldModel.cpp in Sources */,
 				378B2C4E0FE6AF4600B90B67 /* ExtendedProperties.cpp in Sources */,
-				371E5C3619DC44A3009C31B9 /* PrjMateSelectionSharedData.cpp in Sources */,
 				37F3D9251909BB430093536D /* ConfigurationLoader.cpp in Sources */,
 				375FBD2011AC145500597CE9 /* LogManager.cpp in Sources */,
 				3749E17A195D7EE900DC68AA /* BasicProjectWorldObserver.cpp in Sources */,
 				37F4E7F4190C1D1B00E6EA45 /* SquareObject.cpp in Sources */,
 				37E550CF184DE7400041C388 /* Geometry.cpp in Sources */,
 				3749E185195D809C00DC68AA /* SandboxController.cpp in Sources */,
-				371E5C3519DC44A3009C31B9 /* PrjMateSelectionController.cpp in Sources */,
 				3778DD65132EC3650000F4E6 /* Properties.cpp in Sources */,
 				3778DD66132EC3650000F4E6 /* StringUtils.cpp in Sources */,
 				370DD55718E497620084BE83 /* DemoMedeaAgentObserver.cpp in Sources */,
@@ -819,7 +767,6 @@
 				37F4E7F2190C1D1200E6EA45 /* CircleObject.cpp in Sources */,
 				3701DAB21382892400B12539 /* LayeredNeuralNetwork.cpp in Sources */,
 				3749E188195D823900DC68AA /* BasicProjectConfigurationLoader.cpp in Sources */,
-				371E5C3919DC44CD009C31B9 /* PrjMateSelectionConfigurationLoader.cpp in Sources */,
 				3701DAB31382892400B12539 /* MLP.cpp in Sources */,
 				37F3D92A190A72540093536D /* EnergyItem.cpp in Sources */,
 				37F4E7E5190BF88500E6EA45 /* GateObject.cpp in Sources */,
@@ -827,7 +774,6 @@
 				370DD55E18E4A4390084BE83 /* Graphics.cpp in Sources */,
 				3749E184195D809C00DC68AA /* SandboxAgentObserver.cpp in Sources */,
 				3749E178195D7EE900DC68AA /* BasicProjectAgentObserver.cpp in Sources */,
-				371E5C3419DC44A3009C31B9 /* PrjMateSelectionAgentObserver.cpp in Sources */,
 				3749E179195D7EE900DC68AA /* BasicProjectController.cpp in Sources */,
 				3701DAB51382892400B12539 /* NeuralNetworkException.cpp in Sources */,
 				3701DAB61382892400B12539 /* Perceptron.cpp in Sources */,
@@ -873,8 +819,9 @@
 					/Users/nicolas/Downloads/tbb42_20140122oss/lib,
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = roborobo;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				VALID_ARCHS = "x86_64 i386";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -903,8 +850,9 @@
 					/Users/nicolas/Downloads/tbb42_20140122oss/lib,
 					/opt/local/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = roborobo;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 				VALID_ARCHS = "x86_64 i386";
 				WRAPPER_EXTENSION = app;
 			};

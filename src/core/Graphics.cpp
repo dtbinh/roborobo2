@@ -18,14 +18,14 @@ int gTrajectoryFileIndex = 0; // numbering trajectory images (used by saveTrajec
 
 void saveImage ( SDL_Surface *image, std::string __prefix, std::string __comment ) // comment is optional
 {
-    std::string s = gLogDirectoryname + "/" + __prefix + "_" + gStartTime;
+    std::string sLog = gLogDirectoryname + "/" + __prefix + "_" + gStartTime;
 
 	if ( __comment != "" )
-		s += "_" + __comment;
+		sLog += "_" + __comment;
 	
-	s += ".bmp";
+	sLog += ".bmp";
 	
-	SDL_SaveBMP(image,s.c_str());
+	SDL_SaveBMP(image,sLog.c_str());
 }
 
 void saveTrajectoryImage ( std::string __comment )

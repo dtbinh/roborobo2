@@ -13,34 +13,33 @@
 #include "DemoMedea/include/DemoMedeaWorldObserver.h"
 #include <string>
 
-
 DemoMedeaAgentObserver::DemoMedeaAgentObserver( RobotWorldModel *wm )
 {
     _wm = (RobotWorldModel*)wm;
-
+    
 }
 
 DemoMedeaAgentObserver::~DemoMedeaAgentObserver()
 {
-	// nothing to do.
+    // nothing to do.
 }
 
 void DemoMedeaAgentObserver::reset()
 {
-	// nothing to do.
+    // nothing to do.
 }
 
 void DemoMedeaAgentObserver::step()
 {
     // * update energy if needed
     if ( gEnergyLevel && _wm->isAlive() )
-        {
-            _wm->substractEnergy(1);
-            assert( _wm->getEnergyLevel() >= 0 );
-            if ( _wm->getEnergyLevel() == 0 )
-                _wm->setAlive(false);
-        }
-
+    {
+        _wm->substractEnergy(1);
+        assert( _wm->getEnergyLevel() >= 0 );
+        if ( _wm->getEnergyLevel() == 0 )
+            _wm->setAlive(false);
+    }
+    
     // * send callback messages to objects touched or walked upon.
     
     // through distance sensors

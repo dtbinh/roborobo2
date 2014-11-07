@@ -22,22 +22,22 @@
 
 class DemoMedeaWorldObserver : public WorldObserver
 {
-	private:
-		void updateEnvironment();
-        void updateMonitoring();
-
-	protected:
-		int _generationCount;
-		int _lifeIterationCount;
-
-	public:
-		DemoMedeaWorldObserver(World *world);
-		~DemoMedeaWorldObserver();
-
-		void reset();
-		void step();
-
-		int getLifeIterationCount() { return _lifeIterationCount; }
+private:
+    void updateEnvironment();
+    void updateMonitoring();
+    
+protected:
+    int _generationCount;
+    int _lifeIterationCount;
+    
+public:
+    DemoMedeaWorldObserver(World *world);
+    ~DemoMedeaWorldObserver();
+    
+    void reset();
+    void step();
+    
+    int getLifeIterationCount() { return _lifeIterationCount; }
 
 };
 
