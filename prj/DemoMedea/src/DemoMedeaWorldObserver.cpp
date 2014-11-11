@@ -45,6 +45,7 @@ DemoMedeaWorldObserver::DemoMedeaWorldObserver( World* world ) : WorldObserver( 
     gProperties.checkAndGetPropertyValue("gNotListeningStateDelay",&DemoMedeaSharedData::gNotListeningStateDelay,true);
     gProperties.checkAndGetPropertyValue("gListeningStateDelay",&DemoMedeaSharedData::gListeningStateDelay,true);
     
+    gProperties.checkAndGetPropertyValue("gLogGenome",&DemoMedeaSharedData::gLogGenome,false);
     
     // ====
     
@@ -56,7 +57,7 @@ DemoMedeaWorldObserver::DemoMedeaWorldObserver( World* world ) : WorldObserver( 
     
     // * iteration and generation counters
     
-    _lifeIterationCount = -1;
+    _generationItCount = -1;
     _generationCount = -1;
     
 }
@@ -73,16 +74,16 @@ void DemoMedeaWorldObserver::reset()
 
 void DemoMedeaWorldObserver::step()
 {
-    _lifeIterationCount++;
+    _generationItCount++;
     
-    updateMonitoring();
-    
-    if( _lifeIterationCount >= DemoMedeaSharedData::gEvaluationTime ) // switch to next generation.
+    if( _generationItCount == DemoMedeaSharedData::gEvaluationTime+1 ) // switch to next generation.
     {
         // update iterations and generations counters
-        _lifeIterationCount = 0;
+        _generationItCount = 0;
         _generationCount++;
     }
+    
+    updateMonitoring();
     
     updateEnvironment();
     
@@ -97,27 +98,10 @@ void DemoMedeaWorldObserver::updateEnvironment()
 void DemoMedeaWorldObserver::updateMonitoring()
 {
     // * Log at end of each generation
-    
-    if( _lifeIterationCount >= DemoMedeaSharedData::gEvaluationTime ) // end of generation.
+
+    if( gWorld->getIterations() % DemoMedeaSharedData::gEvaluationTime == 1 || gWorld->getIterations() % DemoMedeaSharedData::gEvaluationTime == DemoMedeaSharedData::gEvaluationTime-1 ) // beginning(+1) *and* end of generation. ("==1" is required to monitor the outcome of the first iteration)
     {
-        // * monitoring: count number of active agents.
-        
-        int activeCount = 0;
-        for ( int i = 0 ; i != gNumberOfRobots ; i++ )
-        {
-            if ( (dynamic_cast<DemoMedeaController*>(gWorld->getRobot(i)->getController()))->getWorldModel()->isAlive() == true )
-                activeCount++;
-        }
-        
-        if ( gVerbose )
-        {
-            std::cout << "[gen:" << (gWorld->getIterations()/DemoMedeaSharedData::gEvaluationTime) << ";pop:" << activeCount << "]\n";
-        }
-        
-        // Logging, population-level: alive
-        std::string sLog = std::string("") + "{" + std::to_string(gWorld->getIterations()) + "}[all] [pop_alive:" + std::to_string(activeCount) + "]\n";
-        gLogManager->write(sLog);
-        gLogManager->flush();
+        monitorPopulation();
     }
     
     // * Every N generations, take a video (duration: one generation time)
@@ -141,3 +125,24 @@ void DemoMedeaWorldObserver::updateMonitoring()
     }    
 }
 
+void DemoMedeaWorldObserver::monitorPopulation( bool localVerbose )
+{
+    // * monitoring: count number of active agents.
+    
+    int activeCount = 0;
+    for ( int i = 0 ; i != gNumberOfRobots ; i++ )
+    {
+        if ( (dynamic_cast<DemoMedeaController*>(gWorld->getRobot(i)->getController()))->getWorldModel()->isAlive() == true )
+            activeCount++;
+    }
+    
+    if ( gVerbose && localVerbose )
+    {
+        std::cout << "[gen:" << (gWorld->getIterations()/DemoMedeaSharedData::gEvaluationTime) << ";it:" << gWorld->getIterations() << ";pop:" << activeCount << "]\n";
+    }
+    
+    // Logging, population-level: alive
+    std::string sLog = std::string("") + std::to_string(gWorld->getIterations()) + ",pop,alive," + std::to_string(activeCount) + "\n";
+    gLogManager->write(sLog);
+    gLogManager->flush();
+}

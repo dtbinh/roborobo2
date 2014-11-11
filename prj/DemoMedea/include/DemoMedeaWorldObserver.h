@@ -25,10 +25,11 @@ class DemoMedeaWorldObserver : public WorldObserver
 private:
     void updateEnvironment();
     void updateMonitoring();
+    void monitorPopulation( bool localVerbose = true );
     
 protected:
     int _generationCount;
-    int _lifeIterationCount;
+    int _generationItCount;
     
 public:
     DemoMedeaWorldObserver(World *world);
@@ -37,7 +38,7 @@ public:
     void reset();
     void step();
     
-    int getLifeIterationCount() { return _lifeIterationCount; }
+    int getGenerationItCount() { return _generationItCount; }
 
 };
 

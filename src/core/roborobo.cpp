@@ -1850,8 +1850,19 @@ void closeRoborobo()
     
     gLogFile << "# Started: " << gStartTime << std::endl;
     gLogFile << "# Stopped: " << gStopTime << std::endl;
-    gLogFile << "# Elapsed: " << days << " day(s), " << hours << " hour(s), " << minutes << " minute(s), " << seconds << " second(s)." << std::endl;
+    gLogFile << "# Elapsed: ";
+    if ( days > 0 )
+        gLogFile << days << " day(s), ";
+    if ( hours > 0 )
+        gLogFile << hours << " hour(s), ";
+    if ( minutes > 0 )
+        gLogFile << minutes << " minutes(s), ";
+    gLogFile <<  seconds << " second";
+    if ( seconds > 1 )
+        gLogFile << "s";
+    gLogFile << "." << std::endl;
 
+    
 	stopLogging();
 	clean_up();
 	SDL_Quit();
@@ -1859,9 +1870,17 @@ void closeRoborobo()
     std::cout << std::endl;
     std::cout << "[timestamp::start] " << gStartTime << std::endl;
     std::cout << "[timestamp::stop ] " << gStopTime << std::endl;
-    std::cout << "[Chronometer] " << days << " day(s), " << hours << " hour(s), " << minutes << " minute(s), " << seconds << " second(s)." << std::endl;
-    std::cout << std::endl;
-    
+    std::cout << "[Chronometer] ";
+    if ( days > 0 )
+        std::cout << days << " day(s), ";
+    if ( hours > 0 )
+        std::cout << hours << " hour(s), ";
+    if ( minutes > 0 )
+        std::cout << minutes << " minutes(s), ";
+    std::cout << seconds << " second";
+    if ( seconds > 1 )
+        std::cout << "s";
+    std::cout << "." << std::endl << std::endl;
 }
 
 void resetRoboroboWorld()

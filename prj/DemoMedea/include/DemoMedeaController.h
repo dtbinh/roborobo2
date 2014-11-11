@@ -77,8 +77,15 @@ private:
     unsigned int _nbHiddenLayers;
     std::vector<unsigned int>* _nbNeuronsPerHiddenLayer;
     
+    // logging purpose
+    double _Xinit;
+    double _Yinit;
+    double _dSumTravelled;
+    
     bool storeGenome(std::vector<double> genome, int senderId, int senderBirthdate, float sigma);
     void resetRobot();
+    
+    void logCurrentState();
     
 public:
     

@@ -38,3 +38,5 @@ int DemoMedeaSharedData::gSelectionMethod = 0; // default: random selection
 
 int DemoMedeaSharedData::gNotListeningStateDelay = 0;    // -1: infinite ; 0: no delay ; >0: delay
 int DemoMedeaSharedData::gListeningStateDelay = -1;      // -1: infinite ; 0: no delay ; >0: delay (ignored if gNotListeningStateDelay=-1)
+
+bool DemoMedeaSharedData::gLogGenome = false;

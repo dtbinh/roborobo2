@@ -104,6 +104,12 @@ void DemoMedeaController::step()
             if ( _notListeningDelay == 0 )
             {
                 _isListening = true;
+                
+                std::string sLog = std::string("");
+                sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
+                gLogManager->write(sLog);
+                gLogManager->flush();
+                
                 _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
                 _wm->setRobotLED_colorValues(0, 255, 0); // is listening
             }
@@ -118,14 +124,14 @@ void DemoMedeaController::step()
                 if ( _listeningDelay == 0 )
                 {
                     _isListening = false;
-                    _notListeningDelay = -1; // agent will not be able to be active anymore
-                    _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
-                    
                     // Logging: robot is dead
                     std::string sLog = std::string("");
-                    sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] is indefinitely inactive (no genome + listen time out).\n";
+                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,inactive\n";
                     gLogManager->write(sLog);
                     gLogManager->flush();
+
+                    _notListeningDelay = -1; // agent will not be able to be active anymore
+                    _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
                     
                     resetRobot(); // destroy then create a new NN
                     
@@ -358,6 +364,7 @@ unsigned int DemoMedeaController::computeRequiredNumberOfWeights()
 
 void DemoMedeaController::stepEvolution()
 {
+    
     // * broadcasting genome : robot broadcasts its genome to all neighbors (contact-based wrt proximity sensors)
     
     if ( _wm->isAlive() == true && gRadioNetwork )  	// only if agent is active (ie. not just revived) and deltaE>0.
@@ -366,11 +373,40 @@ void DemoMedeaController::stepEvolution()
     }
     
     // * lifetime ended: replace genome (if possible)
-    if( dynamic_cast<DemoMedeaWorldObserver*>(gWorld->getWorldObserver())->getLifeIterationCount() >= DemoMedeaSharedData::gEvaluationTime-1 )
+    if( gWorld->getIterations() > 0 && gWorld->getIterations() % DemoMedeaSharedData::gEvaluationTime == 0 )
+                    //dynamic_cast<DemoMedeaWorldObserver*>(gWorld->getWorldObserver())->getGenerationItCount() == 0 )  //todelete
     {
         loadNewGenome();
         _nbGenomeTransmission = 0;
     }
+    else
+    {
+        _dSumTravelled = _dSumTravelled + getEuclidianDistance( _wm->getXReal(), _wm->getYReal(), _Xinit, _Yinit ); //remark: incl. squareroot.
+    }
+    
+    // log the genome (only at the second iteration during snapshot time)
+    if ( DemoMedeaSharedData::gLogGenome && gWorld->getIterations() % ( DemoMedeaSharedData::gEvaluationTime * DemoMedeaSharedData::gSnapshotsFrequency ) == 1 )
+    {
+        // Logging: full genome
+        std::string sLog = std::string("");
+        sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",genome,";
+        if ( _wm->isAlive() )
+        {
+            for(unsigned int i=0; i<_genome.size(); i++)
+            {
+                sLog += std::to_string(_genome[i]);
+                if ( i < _genome.size()-1 )
+                    sLog += ",";
+            }
+        }
+        else
+            sLog += "n/a"; // do not write genome
+        
+        sLog += "\n";
+        gLogManager->write(sLog);
+        gLogManager->flush();
+    }
+    
     
     if ( getNewGenomeStatus() ) // check for new NN parameters
     {
@@ -402,7 +438,7 @@ void DemoMedeaController::selectRandomGenome()
         
         // Logging: track descendance
         std::string sLog = std::string("");
-        sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] descends from [" + std::to_string((*it).first) + "::" + std::to_string(_birthdateList[(*it).first]) + "]\n";
+        sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",descendsFrom," + std::to_string((*it).first) + "::" + std::to_string(_birthdateList[(*it).first]) + "\n";
         gLogManager->write(sLog);
         gLogManager->flush();
         
@@ -424,7 +460,7 @@ void DemoMedeaController::selectFirstGenome()
         
         // Logging: track descendance
         std::string sLog = std::string("");
-        sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] descends from [" + std::to_string((*_genomesList.begin()).first) + "::" + std::to_string(_birthdateList[(*_genomesList.begin()).first]) + "]\n";
+        sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",descendsFrom," + std::to_string((*_genomesList.begin()).first) + "::" + std::to_string(_birthdateList[(*_genomesList.begin()).first]) + "\n";
         gLogManager->write(sLog);
         gLogManager->flush();
         
@@ -484,11 +520,6 @@ void DemoMedeaController::mutate( float sigma) // mutate within bounds.
     
     _currentGenome = _genome;
     
-    // Logging: sigma mutation rate
-    std::string sLog = std::string("");
-    sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] [sigma=" + std::to_string(_currentSigma) + "]\n";
-    gLogManager->write(sLog);
-    gLogManager->flush();
 }
 
 
@@ -599,10 +630,7 @@ void DemoMedeaController::loadNewGenome()
 {
     if ( _wm->isAlive() || gEnergyRefill )  // ( gEnergyRefill == true ) enables revive
     {
-        // Logging
-        std::string sLog = "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] [energy:" +  std::to_string(_wm->getEnergyLevel()) + "] [genomeList:" + std::to_string(_genomesList.size()) + "]\n";
-        gLogManager->write(sLog);
-        gLogManager->flush();
+        logCurrentState();
         
         // note: at this point, agent got energy, whether because it was revived or because of remaining energy.
         
@@ -623,11 +651,44 @@ void DemoMedeaController::loadNewGenome()
                     exit(-1);
             }
             
+            //logCurrentState();
+            
             _wm->setAlive(true);
+            
+            std::string sLog = std::string("");
+            sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,active\n";
+            gLogManager->write(sLog);
+            gLogManager->flush();
+            
             if ( _wm->getEnergyLevel() == 0 )
                 _wm->setEnergyLevel(gEnergyInit);
+            
+            _Xinit = _wm->getXReal();
+            _Yinit = _wm->getYReal();
+            _dSumTravelled = 0;
+            
             _wm->setRobotLED_colorValues(255, 0, 0);
             
+            // log the genome (or at least the existence of a genome)
+            if ( _wm->isAlive() )
+            {
+                // Logging: full genome
+                std::string sLog = std::string("");
+                sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",genome,";
+                
+                /*
+                 for(unsigned int i=0; i<_genome.size(); i++)
+                 {
+                 sLog += std::to_string(_genome[i]) + ",";
+                 //gLogFile << std::fixed << std::showpoint << _wm->_genome[i] << " ";
+                 }
+                 */
+                sLog += "(...)"; // do not write genome
+                
+                sLog += "\n";
+                gLogManager->write(sLog);
+                gLogManager->flush();
+            }
         }
         else
         {
@@ -638,7 +699,7 @@ void DemoMedeaController::loadNewGenome()
                 
                 // Logging: "no genome"
                 std::string sLog = std::string("");
-                sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] no_genome.\n";
+                sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",genome,n/a.\n";
                 gLogManager->write(sLog);
                 gLogManager->flush();
                 
@@ -646,34 +707,50 @@ void DemoMedeaController::loadNewGenome()
                 
                 _wm->setAlive(false); // inactive robot *must* import a genome from others (ie. no restart).
                 
-                if ( DemoMedeaSharedData::gNotListeningStateDelay != 0 ) // ie. -1 (infinite) or >0 (temporary)
+                if ( DemoMedeaSharedData::gNotListeningStateDelay != 0 ) // ie. -1 (infinite,dead) or >0 (temporary,mute)
                 {
                     _isListening = false;
+                    
+                    std::string sLog = std::string("");
+                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,inactive\n";
+                    gLogManager->write(sLog);
+                    gLogManager->flush();
+
+                    
                     _notListeningDelay = DemoMedeaSharedData::gNotListeningStateDelay;
                     _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
                     _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
                 }
                 else
+                {
                     _wm->setRobotLED_colorValues(0, 255, 0); // is listening
+                    
+                    std::string sLog = std::string("");
+                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
+                    gLogManager->write(sLog);
+                    gLogManager->flush();
+                }
             }
-        }
-        
-        // log the genome
-        
-        if ( _wm->isAlive() )
-        {
-            // Logging: full genome
-            std::string sLog = std::string("");
-            sLog += "{" + std::to_string(gWorld->getIterations()) + "} [" + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + "] new_genome: ";
-            for(unsigned int i=0; i<_genome.size(); i++)
-            {
-                sLog += std::to_string(_genome[i]) + " ";
-                //gLogFile << std::fixed << std::showpoint << _wm->_genome[i] << " ";
-            }
-            sLog += "\n";
-            gLogManager->write(sLog);
-            gLogManager->flush();
         }
     }
 }
 
+void DemoMedeaController::logCurrentState()
+{
+    // Logging
+    std::string sLog = "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) +
+    ",age," + std::to_string(gWorld->getIterations()-_birthdate) +
+    ",energy," +  std::to_string(_wm->getEnergyLevel()) +
+    ",genomeList," + std::to_string(_genomesList.size()) +
+    ",sigma," + std::to_string(_currentSigma) +
+    ",x_init," + std::to_string(_wm->getXReal()) +
+    ",y_init," + std::to_string(_wm->getYReal()) +
+    ",x_current," + std::to_string(_Xinit) +
+    ",y_current," + std::to_string(_Yinit) +
+    ",dist," + std::to_string( getEuclidianDistance( _Xinit, _Yinit, _wm->getXReal(), _wm->getYReal() ) ) +
+    ",sumOfDist," + std::to_string( _dSumTravelled ) +
+    ",groupId," + std::to_string(_wm->getGroupId()) +
+    "\n";
+    gLogManager->write(sLog);
+    gLogManager->flush();
+}

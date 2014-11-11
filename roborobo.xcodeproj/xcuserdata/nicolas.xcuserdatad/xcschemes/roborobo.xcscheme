@@ -88,10 +88,6 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-l config/prj-medea-mateselection.properties"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-o logs/"
             isEnabled = "YES">
          </CommandLineArgument>
