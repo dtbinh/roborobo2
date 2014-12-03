@@ -103,15 +103,27 @@ void DemoMedeaController::step()
             
             if ( _notListeningDelay == 0 )
             {
-                _isListening = true;
-                
-                std::string sLog = std::string("");
-                sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
-                gLogManager->write(sLog);
-                gLogManager->flush();
                 
                 _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
-                _wm->setRobotLED_colorValues(0, 255, 0); // is listening
+                
+                if ( _listeningDelay > 0 || _listeningDelay == -1 )
+                {
+                    _isListening = true;
+                    
+                    _wm->setRobotLED_colorValues(0, 255, 0); // is listening
+                    
+                    std::string sLog = std::string("");
+                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
+                    gLogManager->write(sLog);
+                    gLogManager->flush();
+                }
+                else
+                {
+                    std::string sLog = std::string("");
+                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,inactive\n"; // never listen again.
+                    gLogManager->write(sLog);
+                    gLogManager->flush();
+                }
             }
         }
         else
@@ -710,25 +722,39 @@ void DemoMedeaController::loadNewGenome()
                 if ( DemoMedeaSharedData::gNotListeningStateDelay != 0 ) // ie. -1 (infinite,dead) or >0 (temporary,mute)
                 {
                     _isListening = false;
+
+                    _notListeningDelay = DemoMedeaSharedData::gNotListeningStateDelay;
+                    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+                    _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
                     
                     std::string sLog = std::string("");
                     sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,inactive\n";
                     gLogManager->write(sLog);
                     gLogManager->flush();
-
                     
-                    _notListeningDelay = DemoMedeaSharedData::gNotListeningStateDelay;
-                    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
-                    _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
                 }
                 else
                 {
-                    _wm->setRobotLED_colorValues(0, 255, 0); // is listening
-                    
-                    std::string sLog = std::string("");
-                    sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
-                    gLogManager->write(sLog);
-                    gLogManager->flush();
+                    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+
+                    if ( _listeningDelay > 0 || _listeningDelay == -1 )
+                    {
+                        _isListening = true;
+                        
+                        _wm->setRobotLED_colorValues(0, 255, 0); // is listening
+                        
+                        std::string sLog = std::string("");
+                        sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,listening\n";
+                        gLogManager->write(sLog);
+                        gLogManager->flush();
+                    }
+                    else
+                    {
+                        std::string sLog = std::string("");
+                        sLog += "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) + ",status,inactive\n";
+                        gLogManager->write(sLog);
+                        gLogManager->flush();
+                    }
                 }
             }
         }

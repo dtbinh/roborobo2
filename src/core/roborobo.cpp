@@ -676,6 +676,20 @@ bool handleKeyEvent(Uint8 *keyboardStates)
 			
 			SDL_Delay(PAUSE_COMMAND); // 200ms delay
 		}
+        
+        if ( keyboardStates[ SDLK_k ] )
+        {
+            gDisplayTail = !gDisplayTail;
+            if ( gVerbose )
+            {
+                if ( gDisplayTail )
+                    std::cout << "Virtual tails are shown." << std::endl;
+                else
+                    std::cout << "Virtual tails are not shown." << std::endl;
+            }
+
+            SDL_Delay(PAUSE_COMMAND); // 200ms delay
+        }
 		
 		if ( keyboardStates[ SDLK_TAB ] )
 		{

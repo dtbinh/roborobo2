@@ -739,41 +739,48 @@ void Robot::show() // display on screen
             }
 		}
         
-        // * show orientation - this is done by adding a *virtual* tail *behind* the robot
-		
-		int xOrientationMarkerSource =  (int)(_wm->_xReal);
-		int yOrientationMarkerSource =  (int)(_wm->_yReal);
+    }
+    
+    if ( _wm->getId() == gRobotIndexFocus && gUserCommandMode )
+    {
+        // * user is taking control of targeted agent - show agent and orientation with multiple changing colors
+        
+        int xOrientationMarkerSource =  (int)(_wm->_xReal);
+        int yOrientationMarkerSource =  (int)(_wm->_yReal);
         
         int xOrientationMarkerTarget =  (int)(_wm->_xReal) + gSensorRange*0.75 * cos(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
-		int yOrientationMarkerTarget =  (int)(_wm->_yReal) + gSensorRange*0.75 * sin(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
+        int yOrientationMarkerTarget =  (int)(_wm->_yReal) + gSensorRange*0.75 * sin(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
         
+        int r,g,b;
+        g = b = (32*_iterations%256) > 128 ? 0 : 255 ;
+        r = 0;
         
-		if ( _wm->getId() == gRobotIndexFocus && gUserCommandMode )
-		{
-			int r,g,b;
-			g = b = (32*_iterations%256) > 128 ? 0 : 255 ;
-            r = 0;
-            
+        // show orientation (multicolor) - this is done by adding a *virtual* tail *behind* the robot
+        for ( int xTmp = -1 ; xTmp < 2 ; xTmp+=2 )
+            for ( int yTmp = -1 ; yTmp < 2 ; yTmp+=2 )
+                traceRayRGBA(gScreen, (int)(_wm->_xReal+(double)xTmp)  - gCamera.x, (int)(_wm->_yReal+(double)yTmp) - gCamera.y, xOrientationMarkerTarget - gCamera.x, yOrientationMarkerTarget - gCamera.y, r , g , b , 255);
+        
+        // show position (multicolor)
+        for ( int xTmp = -2 ; xTmp != 3 ; xTmp++ )
+            for ( int yTmp = -2 ; yTmp != 3 ; yTmp++ )
+                putPixel32( gScreen, xOrientationMarkerSource - gCamera.x + xTmp, yOrientationMarkerSource - gCamera.y + yTmp , SDL_MapRGBA( gScreen->format, r, b , g, 0 ) );
+        
+    }
+    else
+    {
+        // * show orientation - this is done by adding a *virtual* tail *behind* the robot
+        if ( gDisplayTail )
+        {
+            int xOrientationMarkerTarget =  (int)(_wm->_xReal) + gSensorRange*0.75 * cos(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
+            int yOrientationMarkerTarget =  (int)(_wm->_yReal) + gSensorRange*0.75 * sin(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
+
             for ( int xTmp = -1 ; xTmp < 2 ; xTmp+=2 )
                 for ( int yTmp = -1 ; yTmp < 2 ; yTmp+=2 )
-                    traceRayRGBA(gScreen, (int)(_wm->_xReal+(double)xTmp)  - gCamera.x, (int)(_wm->_yReal+(double)yTmp) - gCamera.y, xOrientationMarkerTarget - gCamera.x, yOrientationMarkerTarget - gCamera.y, r , g , b , 255);
-            
-			for ( int xTmp = -2 ; xTmp != 3 ; xTmp++ )
-				for ( int yTmp = -2 ; yTmp != 3 ; yTmp++ )
-					putPixel32( gScreen, xOrientationMarkerSource - gCamera.x + xTmp, yOrientationMarkerSource - gCamera.y + yTmp , SDL_MapRGBA( gScreen->format, r, b , g, 0 ) );
-
-		}
-		else
-		{
-            // tail
-            if ( gDisplayTail )
-                for ( int xTmp = -1 ; xTmp < 2 ; xTmp+=2 )
-                    for ( int yTmp = -1 ; yTmp < 2 ; yTmp+=2 )
-                        traceRayRGBA(gScreen, (int)(_wm->_xReal+(double)xTmp)  - gCamera.x, (int)(_wm->_yReal+(double)yTmp) - gCamera.y, xOrientationMarkerTarget - gCamera.x, yOrientationMarkerTarget - gCamera.y, 255 , 128 , 0 , 255);
-		
+                    traceRayRGBA(gScreen, (int)(_wm->_xReal+(double)xTmp)  - gCamera.x, (int)(_wm->_yReal+(double)yTmp) - gCamera.y, xOrientationMarkerTarget - gCamera.x, yOrientationMarkerTarget - gCamera.y, 90,113,148 , 255); // 255 , 128 , 0
         }
-	}
-
+        
+    }
+    
 }
 
 void Robot::registerRobot()
