@@ -56,7 +56,7 @@ double getSquaredEuclidianDistance(double x1, double y1, double x2, double y2);
 
 // return distance and orientation of targetPt wrt. refPt+orientation (takes into account refPt orientation)
 // returns an angle result in DEGREE, in [-180°,+180°[
-// e.g. getRelativeAngle(robot.coord, robot.orientation, targert.coord) => angle to target
+// e.g. getAngleToTarget(robot.coord, robot.orientation, targert.coord) => angle to target
 inline double getAngleToTarget( Point2d refPt , double orientation, Point2d targetPt )
 {
     double angle;
@@ -69,6 +69,13 @@ inline double getAngleToTarget( Point2d refPt , double orientation, Point2d targ
         angle = angle - 360;
     
     return angle;
+}
+
+inline double getAngleToTarget( double Ax, double Ay, double orientation, double Bx, double By)
+{
+    Point2d refPt = Point2d(Ax,Ay);
+    Point2d targetPt = Point2d(Bx,By);
+    return getAngleToTarget(refPt,orientation,targetPt);
 }
 
 

@@ -52,6 +52,11 @@
 		3778DD65132EC3650000F4E6 /* Properties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3778DD63132EC3650000F4E6 /* Properties.cpp */; };
 		3778DD66132EC3650000F4E6 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3778DD64132EC3650000F4E6 /* StringUtils.cpp */; };
 		378B2C4E0FE6AF4600B90B67 /* ExtendedProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378B2C4D0FE6AF4600B90B67 /* ExtendedProperties.cpp */; };
+		378FE97D1A2F4FC600E95179 /* BoidsAgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378FE9791A2F4FC600E95179 /* BoidsAgentObserver.cpp */; };
+		378FE97E1A2F4FC600E95179 /* BoidsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378FE97A1A2F4FC600E95179 /* BoidsController.cpp */; };
+		378FE97F1A2F4FC600E95179 /* BoidsSharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378FE97B1A2F4FC600E95179 /* BoidsSharedData.cpp */; };
+		378FE9801A2F4FC600E95179 /* BoidsWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378FE97C1A2F4FC600E95179 /* BoidsWorldObserver.cpp */; };
+		378FE9831A2F4FF300E95179 /* BoidsConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378FE9821A2F4FF300E95179 /* BoidsConfigurationLoader.cpp */; };
 		37E550CF184DE7400041C388 /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37E550CE184DE7400041C388 /* Geometry.cpp */; };
 		37ECDD17136AF6370037E7CE /* LandmarkObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37ECDD16136AF6370037E7CE /* LandmarkObject.cpp */; };
 		37F3D9251909BB430093536D /* ConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F3D9241909BB430093536D /* ConfigurationLoader.cpp */; };
@@ -173,6 +178,16 @@
 		3778DD64132EC3650000F4E6 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		378B2C4D0FE6AF4600B90B67 /* ExtendedProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtendedProperties.cpp; sourceTree = "<group>"; };
 		378B2C4F0FE6AF6300B90B67 /* ExtendedProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedProperties.h; sourceTree = "<group>"; };
+		378FE9741A2F4FC600E95179 /* BoidsAgentObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoidsAgentObserver.h; sourceTree = "<group>"; };
+		378FE9751A2F4FC600E95179 /* BoidsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoidsController.h; sourceTree = "<group>"; };
+		378FE9761A2F4FC600E95179 /* BoidsSharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoidsSharedData.h; sourceTree = "<group>"; };
+		378FE9771A2F4FC600E95179 /* BoidsWorldObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoidsWorldObserver.h; sourceTree = "<group>"; };
+		378FE9791A2F4FC600E95179 /* BoidsAgentObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoidsAgentObserver.cpp; sourceTree = "<group>"; };
+		378FE97A1A2F4FC600E95179 /* BoidsController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoidsController.cpp; sourceTree = "<group>"; };
+		378FE97B1A2F4FC600E95179 /* BoidsSharedData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoidsSharedData.cpp; sourceTree = "<group>"; };
+		378FE97C1A2F4FC600E95179 /* BoidsWorldObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoidsWorldObserver.cpp; sourceTree = "<group>"; };
+		378FE9811A2F4FD700E95179 /* BoidsConfigurationLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoidsConfigurationLoader.h; sourceTree = "<group>"; };
+		378FE9821A2F4FF300E95179 /* BoidsConfigurationLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoidsConfigurationLoader.cpp; sourceTree = "<group>"; };
 		37B2D70F183D7B5A00F364ED /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		37C234DB0F821A4400C977FE /* func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = func.h; sourceTree = "<group>"; };
 		37C234DC0F821A4400C977FE /* Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Properties.h; sourceTree = "<group>"; };
@@ -334,6 +349,7 @@
 				3730415018EB1C3E0086A449 /* libSDL_image-1.2.0.dylib */,
 				3730415118EB1C3E0086A449 /* libSDL.dylib */,
 				3730415418EB1C8F0086A449 /* libtbb.dylib */,
+				378FE9721A2F4FC600E95179 /* Boids */,
 				370DD54818E497620084BE83 /* DemoMedea */,
 				374E0CEF11AECDDC0003E446 /* BasicProject */,
 				3749E17B195D809C00DC68AA /* Sandbox */,
@@ -390,6 +406,7 @@
 			children = (
 				37F3D9231909BB2D0093536D /* ConfigurationLoader.h */,
 				3749E189195D824900DC68AA /* BasicProjectConfigurationLoader.h */,
+				378FE9811A2F4FD700E95179 /* BoidsConfigurationLoader.h */,
 				372B8E4D137B303B00E7276B /* DemoMedeaConfigurationLoader.h */,
 				37764932195D9A34003D82E3 /* SandboxConfigurationLoader.h */,
 			);
@@ -439,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				3749E187195D823900DC68AA /* BasicProjectConfigurationLoader.cpp */,
+				378FE9821A2F4FF300E95179 /* BoidsConfigurationLoader.cpp */,
 				37F3D9241909BB430093536D /* ConfigurationLoader.cpp */,
 				372B8E4E137B305900E7276B /* DemoMedeaConfigurationLoader.cpp */,
 				37F3D929190A72540093536D /* EnergyItem.cpp */,
@@ -618,6 +636,37 @@
 			path = zsu;
 			sourceTree = "<group>";
 		};
+		378FE9721A2F4FC600E95179 /* Boids */ = {
+			isa = PBXGroup;
+			children = (
+				378FE9731A2F4FC600E95179 /* include */,
+				378FE9781A2F4FC600E95179 /* src */,
+			);
+			path = Boids;
+			sourceTree = "<group>";
+		};
+		378FE9731A2F4FC600E95179 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				378FE9741A2F4FC600E95179 /* BoidsAgentObserver.h */,
+				378FE9751A2F4FC600E95179 /* BoidsController.h */,
+				378FE9761A2F4FC600E95179 /* BoidsSharedData.h */,
+				378FE9771A2F4FC600E95179 /* BoidsWorldObserver.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		378FE9781A2F4FC600E95179 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				378FE9791A2F4FC600E95179 /* BoidsAgentObserver.cpp */,
+				378FE97A1A2F4FC600E95179 /* BoidsController.cpp */,
+				378FE97B1A2F4FC600E95179 /* BoidsSharedData.cpp */,
+				378FE97C1A2F4FC600E95179 /* BoidsWorldObserver.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		37B2D70E183D7B5A00F364ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -730,6 +779,7 @@
 				3720BD0E0F7D149100D5FF81 /* Agent.cpp in Sources */,
 				370DD55B18E497620084BE83 /* DemoMedeaWorldObserver.cpp in Sources */,
 				3749E186195D809C00DC68AA /* SandboxWorldObserver.cpp in Sources */,
+				378FE97D1A2F4FC600E95179 /* BoidsAgentObserver.cpp in Sources */,
 				37F4E7F0190C1D0400E6EA45 /* PhysicalObject.cpp in Sources */,
 				3720BD0F0F7D149100D5FF81 /* AgentObserver.cpp in Sources */,
 				3720BD100F7D149100D5FF81 /* Controller.cpp in Sources */,
@@ -744,7 +794,10 @@
 				3720BD1B0F7D149100D5FF81 /* Timer.cpp in Sources */,
 				37F3D92D190A7BA70093536D /* RoundObject.cpp in Sources */,
 				3720BD1D0F7D149100D5FF81 /* World.cpp in Sources */,
+				378FE97E1A2F4FC600E95179 /* BoidsController.cpp in Sources */,
+				378FE97F1A2F4FC600E95179 /* BoidsSharedData.cpp in Sources */,
 				37F3D928190A5E5D0093536D /* PhysicalObjectFactory.cpp in Sources */,
+				378FE9831A2F4FF300E95179 /* BoidsConfigurationLoader.cpp in Sources */,
 				3720BD1E0F7D149100D5FF81 /* WorldObserver.cpp in Sources */,
 				3720BD1F0F7D149100D5FF81 /* WorldModel.cpp in Sources */,
 				378B2C4E0FE6AF4600B90B67 /* ExtendedProperties.cpp in Sources */,
@@ -763,6 +816,7 @@
 				372B8E4F137B305900E7276B /* DemoMedeaConfigurationLoader.cpp in Sources */,
 				3701DAB11382892400B12539 /* Elman.cpp in Sources */,
 				370DD55A18E497620084BE83 /* DemoMedeaSharedData.cpp in Sources */,
+				378FE9801A2F4FC600E95179 /* BoidsWorldObserver.cpp in Sources */,
 				37764934195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp in Sources */,
 				37F4E7F2190C1D1200E6EA45 /* CircleObject.cpp in Sources */,
 				3701DAB21382892400B12539 /* LayeredNeuralNetwork.cpp in Sources */,

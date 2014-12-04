@@ -52,9 +52,6 @@ DemoMedeaController::DemoMedeaController( RobotWorldModel *wm )
     _wm->setAlive(true);
     _wm->setRobotLED_colorValues(255, 0, 0);
     
-    //std::cout << "["<< _wm->getId() <<"]BREAKPOINT.0: " << _wm->_desiredTranslationalValue << " , " << _wm->_desiredRotationalVelocity << "\n";
-    
-    
 }
 
 DemoMedeaController::~DemoMedeaController()
@@ -629,7 +626,7 @@ void DemoMedeaController::broadcastGenome()
                     
                 }
                 
-                bool success = targetRobotController->storeGenome(_currentGenome, _wm->getId(), _birthdate, sigmaSendValue); // other agent stores my genome.
+                bool success = targetRobotController->storeGenome(_currentGenome, _wm->getId(), _birthdate, sigmaSendValue); // other agent stores my genome. Contaminant stragegy.
                 
                 if ( success == true )
                     _nbGenomeTransmission++;
