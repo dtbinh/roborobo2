@@ -31,7 +31,7 @@ makefileVariablePattern = "[ \t]*=[ \t]*([^\n]*)"
 debugVariableName = "DEBUG"
 verboseVariableName = "VERBOSE"
 modulesVariableName = "MODULES"
-initialValueOfModulesVariable = "BasicProject DemoMedea"
+initialValueOfModulesVariable = "BasicProject DemoMedea Boids"
 configurationLoaderPattern = re.compile(".*ConfigurationLoader.cpp")
 
 
