@@ -216,6 +216,7 @@ float gMaxTranslationalSpeed = 2; // pixels/sec.
 float gMaxTranslationalDeltaValue = gMaxTranslationalSpeed; // maximum delta update value btw current and desired speed.
 float gMaxRotationalSpeed = 30; // degrees/sec.
 int gSensorRange = 64;
+int gTailLength = 16;
 
 int gInspectorCursorMaxSpeedOnXaxis = 5; // "god" inspector mode max speed on both axis ("G" key to activate)
 int gInspectorCursorMaxSpeedOnYaxis = 10;
@@ -1360,8 +1361,13 @@ bool loadProperties( std::string __propertiesFilename )
 		std::cerr << "[MISSING] gSensorRange value is missing.\n";
 		returnValue = false;
 	}
+    
+    if ( gProperties.hasProperty("gTailLength") )
+        convertFromString<int>(gTailLength, gProperties.getProperty("gTailLength"), std::dec);
+    else
+        std::cerr << "[MISSING] gTailLength value is missing. Assume default value (" << gTailLength << ").\n";
 
-	if ( gProperties.hasProperty("gMaxRadioDistance") )
+    if ( gProperties.hasProperty("gMaxRadioDistance") )
 	{
         std::cerr << "[WARNING] gMaxRadioDistance is set, but is useless.\n";
         convertFromString<int>(gMaxRadioDistance, gProperties.getProperty("gMaxRadioDistance"), std::dec);

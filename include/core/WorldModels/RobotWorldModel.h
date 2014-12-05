@@ -21,6 +21,14 @@
 
 class World;
 
+#define SENSOR_REGISTERID 0
+#define SENSOR_SOURCENORM 1
+#define SENSOR_SOURCEANGLE 2
+#define SENSOR_TARGETNORM 3
+#define SENSOR_TARGETANGLE 4
+#define SENSOR_DISTANCEVALUE 5
+#define SENSOR_OBJECTVALUE 6
+
 typedef boost::multi_array<double, 2> sensor_array;
 
 class RobotWorldModel : public WorldModel
@@ -44,11 +52,7 @@ protected:
     // _cameraSensors :
     //      a collection of sensors. Each sensor contains 7 (double) values:
     //      id sensor(R),sensor_origin_norm,sensor_origin_angle,sensor_target_distance_from_agent_center(!),sensor_target_angle, "current value", object Id.
-    //typedef sensor_array::index sensor_index;
-    //sensor_array _cameraSensors();
     sensor_array _cameraSensors;
-    
-    //std::vector<std::vector<double> > _cameraSensors; // a collection of sensors. Each sensor contains 7 (double) values: id sensor(R),sensor_origin_norm,sensor_origin_angle,sensor_target_distance_from_agent_center(!),sensor_target_angle, "current value", object Id.
     
     bool _initSensor;
     
@@ -110,12 +114,12 @@ public:
     
     double getDistanceValueFromCameraSensor( int i )
     {
-        return getCameraSensorValue(i,5);
+        return getCameraSensorValue(i,SENSOR_DISTANCEVALUE);
     }
     
     double getObjectIdFromCameraSensor( int i )
     {
-        return getCameraSensorValue(i,6);
+        return getCameraSensorValue(i,SENSOR_OBJECTVALUE);
     }
     
     double getCameraSensorMaximumDistanceValue( int i )

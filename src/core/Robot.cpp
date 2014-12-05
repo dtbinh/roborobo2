@@ -41,7 +41,7 @@ Robot::Robot( World *__world )
     _wm->initCameraSensors(_wm->_cameraSensorsNb );
 	
     for ( int i = 0 ; i != _wm->_cameraSensorsNb ; i++ )
-		_wm->setCameraSensorValue(i,0,-1);
+		_wm->setCameraSensorValue(i,SENSOR_REGISTERID,-1);
 	//int sensorIt = 0;
 	
 	//register sensors
@@ -56,7 +56,7 @@ Robot::Robot( World *__world )
 				Uint8 r, g, b;
 				SDL_GetRGB(pixel,gRobotSpecsImage->format,&r,&g,&b); 
 
-				if ( _wm->getCameraSensorValue(r,0) != -1 )
+				if ( _wm->getCameraSensorValue(r,SENSOR_REGISTERID) != -1 )
 				{
 					std::cout << "[CRITICAL] robot sensor id already in use -- check agent specification image." << std::endl;
 					exit(-1);
@@ -69,28 +69,28 @@ Robot::Robot( World *__world )
 				}
 
 				
-				_wm->setCameraSensorValue(r,0,r); // no. sensor
+				_wm->setCameraSensorValue(r,SENSOR_REGISTERID,r); // no. sensor
 				
 				// sensor origin point location wrt. agent center
-				_wm->setCameraSensorValue(r,1, sqrt ( (x-gRobotWidth/2) * (x-gRobotWidth/2) + (y-gRobotHeight/2) * (y-gRobotHeight/2) ) ); // length
-				double angleCosinus = ( (x-(gRobotWidth/2)) / _wm->getCameraSensorValue(r,1) );
-				double angleSinus   =  ( (y-(gRobotHeight/2)) / _wm->getCameraSensorValue(r,1) );
+				_wm->setCameraSensorValue(r,SENSOR_SOURCENORM, sqrt ( (x-gRobotWidth/2) * (x-gRobotWidth/2) + (y-gRobotHeight/2) * (y-gRobotHeight/2) ) ); // length
+				double angleCosinus = ( (x-(gRobotWidth/2)) / _wm->getCameraSensorValue(r,SENSOR_SOURCENORM) );
+				double angleSinus   =  ( (y-(gRobotHeight/2)) / _wm->getCameraSensorValue(r,SENSOR_SOURCENORM) );
 				if (  angleSinus >= 0 )
-					_wm->setCameraSensorValue(r,2, acos ( angleCosinus ) + M_PI/2 ); // angle (in radian)
+					_wm->setCameraSensorValue(r,SENSOR_SOURCEANGLE, acos ( angleCosinus ) + M_PI/2 ); // angle (in radian)
 				else
-					_wm->setCameraSensorValue(r,2, -acos ( angleCosinus ) + M_PI/2 + M_PI*2 ); // angle (in radian)
+					_wm->setCameraSensorValue(r,SENSOR_SOURCEANGLE, -acos ( angleCosinus ) + M_PI/2 + M_PI*2 ); // angle (in radian)
 
 				// sensor target point location wrt. agent center -- sensor target angle is (green+blue) component values
 				double angle = g+b-90;   // note: '-90deg' is due to image definition convention (in image, 0° means front of agent, which is upward -- while 0° in simulation means facing right) 				
 				double xTarget = ( x - gRobotWidth/2 ) + cos ( angle * M_PI / 180) * gSensorRange;
 				double yTarget = ( y - gRobotHeight/2 ) + sin ( angle * M_PI / 180) * gSensorRange;
-				_wm->setCameraSensorValue(r,3 ,sqrt ( xTarget*xTarget + yTarget*yTarget) ); // length (**from agent center**)
-				angleCosinus = xTarget / _wm->getCameraSensorValue(r,3);
-				angleSinus   = yTarget / _wm->getCameraSensorValue(r,3);
+				_wm->setCameraSensorValue(r,SENSOR_TARGETNORM ,sqrt ( xTarget*xTarget + yTarget*yTarget) ); // length (**from agent center**)
+				angleCosinus = xTarget / _wm->getCameraSensorValue(r,SENSOR_TARGETNORM);
+				angleSinus   = yTarget / _wm->getCameraSensorValue(r,SENSOR_TARGETNORM);
 				if ( angleSinus >= 0 )
-					_wm->setCameraSensorValue(r,4, acos ( angleCosinus ) + M_PI/2 ); // angle (in radian) wrt. agent center
+					_wm->setCameraSensorValue(r,SENSOR_TARGETANGLE, acos ( angleCosinus ) + M_PI/2 ); // angle (in radian) wrt. agent center
 				else
-					_wm->setCameraSensorValue(r,4, -acos ( angleCosinus ) + M_PI/2 + M_PI*2 );
+					_wm->setCameraSensorValue(r,SENSOR_TARGETANGLE, -acos ( angleCosinus ) + M_PI/2 + M_PI*2 );
 				r++;
 			}
 		}
@@ -280,8 +280,8 @@ void Robot::reset()
 
 	for ( int i = 0 ; i != _wm->_cameraSensorsNb ; i++ ) // initialize sensor values to max range, no contact
 	{
-		_wm->setCameraSensorValue(i,5, gSensorRange ); // range: max
-		_wm->setCameraSensorValue(i,6, 0 ); // type:  none
+		_wm->setCameraSensorValue(i,SENSOR_DISTANCEVALUE, gSensorRange ); // range: max
+		_wm->setCameraSensorValue(i,SENSOR_OBJECTVALUE, 0 ); // type:  none
 	}
     
     for ( int i = 0 ; i < 3 ; i++ )
@@ -592,22 +592,22 @@ void Robot::move( int __recursiveIt ) // the interface btw agent and world -- in
 	for ( int i = 0 ; i != _wm->_cameraSensorsNb ; i++ )
 	{
 		// Warning: the following is repeated in the show method because coordinates are not stored, but are needed to display the sensor rays.
-		double x1 = (_wm->_xReal + _wm->getCameraSensorValue(i,1) * cos( _wm->getCameraSensorValue(i,2) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-		double y1 = (_wm->_yReal + _wm->getCameraSensorValue(i,1) * sin( _wm->getCameraSensorValue(i,2) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-		double x2 = (_wm->_xReal + _wm->getCameraSensorValue(i,3) * cos( _wm->getCameraSensorValue(i,4) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-		double y2 = (_wm->_yReal + _wm->getCameraSensorValue(i,3) * sin( _wm->getCameraSensorValue(i,4) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+		double x1 = (_wm->_xReal + _wm->getCameraSensorValue(i,SENSOR_SOURCENORM) * cos( _wm->getCameraSensorValue(i,SENSOR_SOURCEANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+		double y1 = (_wm->_yReal + _wm->getCameraSensorValue(i,SENSOR_SOURCENORM) * sin( _wm->getCameraSensorValue(i,SENSOR_SOURCEANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+		double x2 = (_wm->_xReal + _wm->getCameraSensorValue(i,SENSOR_TARGETNORM) * cos( _wm->getCameraSensorValue(i,SENSOR_TARGETANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+		double y2 = (_wm->_yReal + _wm->getCameraSensorValue(i,SENSOR_TARGETNORM) * sin( _wm->getCameraSensorValue(i,SENSOR_TARGETANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
 
 		// cast sensor ray.
-		_wm->setCameraSensorValue(i,5, castSensorRay(gEnvironmentImage, x1, y1, &x2, &y2, _wm->getCameraSensorMaximumDistanceValue(i)) ); // x2 and y2 are overriden with collision coordinate if ray hits object. -- not used here.
+		_wm->setCameraSensorValue(i,SENSOR_DISTANCEVALUE, castSensorRay(gEnvironmentImage, x1, y1, &x2, &y2, _wm->getCameraSensorMaximumDistanceValue(i)) ); // x2 and y2 are overriden with collision coordinate if ray hits object. -- not used here.
         
 		Uint8 r, g, b;
 		Uint32 pixel = getPixel32( gEnvironmentImage, x2 , y2);
 		SDL_GetRGB(pixel,gEnvironmentImage->format,&r,&g,&b);
         if ( r == 0xFF && g == 0xFF && b == 0xFF )
-            _wm->setCameraSensorValue(i,6, -1); // nothing
+            _wm->setCameraSensorValue(i,SENSOR_OBJECTVALUE, -1); // nothing
         else
-            _wm->setCameraSensorValue(i,6, (r<<16)+(g<<8)+b); // type of objects. [0-gRobotIndexStartOffset[ is object, [gRobotIndexStartOffset-...[ is robots
-            //_wm->setCameraSensorValue(i,6, (r<<16)+(g<<8)+b); // type of objects. [0-gRobotIndexStartOffset[ is object, [gRobotIndexStartOffset-...[ is robots
+            _wm->setCameraSensorValue(i,SENSOR_OBJECTVALUE, (r<<16)+(g<<8)+b); // type of objects. [0-gRobotIndexStartOffset[ is object, [gRobotIndexStartOffset-...[ is robots
+            //_wm->setCameraSensorValue(i,SENSOR_OBJECTVALUE, (r<<16)+(g<<8)+b); // type of objects. [0-gRobotIndexStartOffset[ is object, [gRobotIndexStartOffset-...[ is robots
 	}
     
 	Uint8 r, g, b;
@@ -716,16 +716,16 @@ void Robot::show() // display on screen
 		for ( int i = 0 ; i != _wm->_cameraSensorsNb ; i++ )
 		{
 			// Warning: the following is a repetition of code already in the move method (sensor ray casting) in order to display it (coordinates are not stored)
-			double x1 = (_wm->_xReal + _wm->getCameraSensorValue(i,1) * cos( _wm->getCameraSensorValue(i,2) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-			double y1 = (_wm->_yReal + _wm->getCameraSensorValue(i,1) * sin( _wm->getCameraSensorValue(i,2) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-			double x2 = (_wm->_xReal + _wm->getCameraSensorValue(i,3) * cos( _wm->getCameraSensorValue(i,4) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
-			double y2 = (_wm->_yReal + _wm->getCameraSensorValue(i,3) * sin( _wm->getCameraSensorValue(i,4) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+			double x1 = (_wm->_xReal + _wm->getCameraSensorValue(i,SENSOR_SOURCENORM) * cos( _wm->getCameraSensorValue(i,SENSOR_SOURCEANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+			double y1 = (_wm->_yReal + _wm->getCameraSensorValue(i,SENSOR_SOURCENORM) * sin( _wm->getCameraSensorValue(i,SENSOR_SOURCEANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+			double x2 = (_wm->_xReal + _wm->getCameraSensorValue(i,SENSOR_TARGETNORM) * cos( _wm->getCameraSensorValue(i,SENSOR_TARGETANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
+			double y2 = (_wm->_yReal + _wm->getCameraSensorValue(i,SENSOR_TARGETNORM) * sin( _wm->getCameraSensorValue(i,SENSOR_TARGETANGLE) + _wm->_agentAbsoluteOrientation * M_PI / 180 ) ) ;
 
 			// sensor ray casting is also performed in the move method -- this time we dont store data (already done). -- this one is only used to *display* the ray. _cameraSensors[i][5] contains the length, but not the (x2,y2) location where the ray stops.
             castSensorRay(gEnvironmentImage, x1, y1, &x2, &y2, _wm->getCameraSensorMaximumDistanceValue(i)); // x2 and y2 are overriden with collision coordinate if ray hits object.
 
 			// display on screen
-			if ( _wm->getCameraSensorValue(i,5) < _wm->getCameraSensorMaximumDistanceValue(i)-1 ) //gSensorRange-1 )
+			if ( _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE) < _wm->getCameraSensorMaximumDistanceValue(i)-1 ) //gSensorRange-1 )
             {
                 if ( gDisplaySensors == 2 )
                     traceRayRGBA(gScreen, int(x1+0.5)-gCamera.x, int(y1+0.5)-gCamera.y, int(x2+0.5)-gCamera.x, int(y2+0.5)-gCamera.y, 255 , 0 , 0 , 255);
@@ -769,10 +769,10 @@ void Robot::show() // display on screen
     else
     {
         // * show orientation - this is done by adding a *virtual* tail *behind* the robot
-        if ( gDisplayTail )
+        if ( gDisplayTail && gNiceRendering )
         {
-            int xOrientationMarkerTarget =  (int)(_wm->_xReal) + gSensorRange*0.75 * cos(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
-            int yOrientationMarkerTarget =  (int)(_wm->_yReal) + gSensorRange*0.75 * sin(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
+            int xOrientationMarkerTarget =  (int)(_wm->_xReal) + gTailLength * cos(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
+            int yOrientationMarkerTarget =  (int)(_wm->_yReal) + gTailLength * sin(( _wm->_agentAbsoluteOrientation + 180 ) * M_PI / 180);
 
             for ( int xTmp = -1 ; xTmp < 2 ; xTmp+=2 )
                 for ( int yTmp = -1 ; yTmp < 2 ; yTmp+=2 )

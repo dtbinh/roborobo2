@@ -1,6 +1,5 @@
 /**
  * @author Nicolas Bredeche <nicolas.bredeche@upmc.fr>
- * NNlib: Leo Cazenille <leo.cazenille@upmc.fr>
  */
 
 #include "Boids/include/BoidsController.h"
@@ -75,23 +74,23 @@ void BoidsController::step()
     
     for( int i = 0 ; i < _wm->_cameraSensorsNb ; i++)
     {
-        int targetIndex = _wm->getObjectIdFromCameraSensor(i);
+        int targetRawIndex = _wm->getObjectIdFromCameraSensor(i);
         
-        if ( targetIndex >= gRobotIndexStartOffset )   // sensor ray bumped into a robot        -- TODO: peut compter plusieurs fois les mêmes robots !!!!!
+        if ( targetRawIndex >= gRobotIndexStartOffset )   // sensor ray bumped into a robot -- WARNING: one (very close) neighbor can be seen by more than one sensor (in the following, we dont care if this happen, though it is not correct to do so)
         {
-            targetIndex = targetIndex - gRobotIndexStartOffset; // convert image registering index into robot id.
+            int targetRobotIndex = targetRawIndex - gRobotIndexStartOffset; // convert image registering index into robot id.
             
             nbNeighbours++;
             
             // update average center of mass
             
-            avgCenterOfMass_X = avgCenterOfMass_X + gWorld->getRobot(targetIndex)->getWorldModel()->_xReal;
-            avgCenterOfMass_Y = avgCenterOfMass_Y + gWorld->getRobot(targetIndex)->getWorldModel()->_yReal;
+            avgCenterOfMass_X = avgCenterOfMass_X + gWorld->getRobot(targetRobotIndex)->getWorldModel()->_xReal;
+            avgCenterOfMass_Y = avgCenterOfMass_Y + gWorld->getRobot(targetRobotIndex)->getWorldModel()->_yReal;
             
             // update delta orientation
             
             double srcOrientation = _wm->_agentAbsoluteOrientation;
-            double tgtOrientation = gWorld->getRobot(targetIndex)->getWorldModel()->_agentAbsoluteOrientation;
+            double tgtOrientation = gWorld->getRobot(targetRobotIndex)->getWorldModel()->_agentAbsoluteOrientation;
             
             double delta_orientation = srcOrientation - tgtOrientation;
             if ( delta_orientation >= 180.0 )
@@ -106,7 +105,7 @@ void BoidsController::step()
             
             // update min/max distance (if relevant)
             
-            double dist = _wm->getCameraSensorValue(i,5);
+            double dist = _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE);
             
             if ( dist < minDist )
             {
@@ -116,8 +115,8 @@ void BoidsController::step()
         }
         else
         {
-            if ( targetIndex == 0 && _wm->getCameraSensorValue(i,5) < minDistToWall ) // closest wall
-                minDistToWall = _wm->getCameraSensorValue(i,5);
+            if ( targetRawIndex == 0 && _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE) < minDistToWall ) // closest wall
+                minDistToWall = _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE);
         }
     }
     
@@ -144,11 +143,11 @@ void BoidsController::step()
         else
         {
             // obstacle avoidance (assume 8 sensors, but works ok with 12)
-            _wm->_desiredTranslationalValue =  + 1 - ( (double)gSensorRange - ((_wm->getCameraSensorValue(2,5)+_wm->getCameraSensorValue(3,5))/2) )  / (double)gSensorRange;
-            if ( _wm->getCameraSensorValue(0,5) + _wm->getCameraSensorValue(1,5) + _wm->getCameraSensorValue(2,5) < _wm->getCameraSensorValue(3,5) + _wm->getCameraSensorValue(4,5) + _wm->getCameraSensorValue(5,5) )
+            _wm->_desiredTranslationalValue =  + 1 - ( (double)gSensorRange - ((_wm->getCameraSensorValue(2,SENSOR_DISTANCEVALUE)+_wm->getCameraSensorValue(3,SENSOR_DISTANCEVALUE))/2) )  / (double)gSensorRange;
+            if ( _wm->getCameraSensorValue(0,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(1,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(2,SENSOR_DISTANCEVALUE) < _wm->getCameraSensorValue(3,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(4,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(5,SENSOR_DISTANCEVALUE) )
                 _wm->_desiredRotationalVelocity = +5;
             else
-                if ( _wm->getCameraSensorValue(3,5) + _wm->getCameraSensorValue(4,5) + _wm->getCameraSensorValue(5,5) < 3*gSensorRange )
+                if ( _wm->getCameraSensorValue(3,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(4,SENSOR_DISTANCEVALUE) + _wm->getCameraSensorValue(5,SENSOR_DISTANCEVALUE) < 3*gSensorRange )
                     _wm->_desiredRotationalVelocity = -5;
                 else
                     if ( _wm->_desiredRotationalVelocity > 0 )
@@ -250,24 +249,24 @@ void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (mo
     // *
     
     // Get distance to closest obstacle (wall or robot) from 8 sensors around the robot (works with the 12-sensors robot)
-    double leftSensor = _wm->getCameraSensorValue(0,5);
-    double leftFwdSensor = _wm->getCameraSensorValue(2,5);
-    double fwdSensor = _wm->getCameraSensorValue(4,5);
-    double rightFwdSensor = _wm->getCameraSensorValue(6,5);
-    double rightSensor = _wm->getCameraSensorValue(8,5);
-    double rightBwdSensor = _wm->getCameraSensorValue(9,5);
-    double bwdSensor = _wm->getCameraSensorValue(10,5);
-    double leftBwdSensor = _wm->getCameraSensorValue(11,5);
+    double leftSensor = _wm->getCameraSensorValue(0,SENSOR_DISTANCEVALUE);
+    double leftFwdSensor = _wm->getCameraSensorValue(2,SENSOR_DISTANCEVALUE);
+    double fwdSensor = _wm->getCameraSensorValue(4,SENSOR_DISTANCEVALUE);
+    double rightFwdSensor = _wm->getCameraSensorValue(6,SENSOR_DISTANCEVALUE);
+    double rightSensor = _wm->getCameraSensorValue(8,SENSOR_DISTANCEVALUE);
+    double rightBwdSensor = _wm->getCameraSensorValue(9,SENSOR_DISTANCEVALUE);
+    double bwdSensor = _wm->getCameraSensorValue(10,SENSOR_DISTANCEVALUE);
+    double leftBwdSensor = _wm->getCameraSensorValue(11,SENSOR_DISTANCEVALUE);
 
     int nbNeighbors = 0;
     
     for( int i = 0 ; i < _wm->_cameraSensorsNb ; i++)
     {
-        int targetIndex = _wm->getObjectIdFromCameraSensor(i);
+        int targetRawIndex = _wm->getObjectIdFromCameraSensor(i);
         
-        if ( targetIndex >= gRobotIndexStartOffset )   // sensor ray bumped into a robot
+        if ( targetRawIndex >= gRobotIndexStartOffset )   // sensor ray bumped into a robot
         {
-            targetIndex = targetIndex - gRobotIndexStartOffset; // convert image registering index into robot id.
+            int targetRobotIndex = targetRawIndex - gRobotIndexStartOffset; // convert image registering index into robot id.
             
             nbNeighbors++;
             
@@ -275,13 +274,13 @@ void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (mo
             double yMyself = _wm->_yReal;
             double alphaMyself = _wm->_agentAbsoluteOrientation;
             
-            double xNeighbor = gWorld->getRobot(targetIndex)->getWorldModel()->_xReal;
-            double yNeighbor = gWorld->getRobot(targetIndex)->getWorldModel()->_yReal;
-            double alphaNeighbor = gWorld->getRobot(targetIndex)->getWorldModel()->_agentAbsoluteOrientation;
+            double xNeighbor = gWorld->getRobot(targetRobotIndex)->getWorldModel()->_xReal;
+            double yNeighbor = gWorld->getRobot(targetRobotIndex)->getWorldModel()->_yReal;
+            double alphaNeighbor = gWorld->getRobot(targetRobotIndex)->getWorldModel()->_agentAbsoluteOrientation;
 
             double angleDeltaToNeighbor = getAngleToTarget(xMyself, yMyself, alphaMyself, xNeighbor, yNeighbor);
 
-            std::cout << "robot no." << _wm->_id << " (x=" << xMyself << ",y=" << yMyself << "," << alphaMyself << "°) sees robot no." << targetIndex << " (x=" << xNeighbor << ",y=" << yNeighbor << "," << alphaNeighbor << "°) at distance " << _wm->getCameraSensorValue(i,5) << ", angle " << angleDeltaToNeighbor << "°!\n";
+            std::cout << "robot no." << _wm->_id << " (x=" << xMyself << ",y=" << yMyself << "," << alphaMyself << "°) sees robot no." << targetRobotIndex << " (x=" << xNeighbor << ",y=" << yNeighbor << "," << alphaNeighbor << "°) at distance " << _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE) << ", angle " << angleDeltaToNeighbor << "°!\n";
             // note: here, angle means at which angle does the robot sees its neighbor wrt to the direction it is facing.
             
             double delta_orientation = alphaMyself - alphaNeighbor;
@@ -294,9 +293,9 @@ void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (mo
         }
         else
         {
-            if ( targetIndex == 0 && _wm->getCameraSensorValue(i,5) < 10 ) // closest wall
+            if ( targetRawIndex == 0 && _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE) < 10 ) // closest wall
             {
-                std::cout << "robot no." << _wm->_id << " sees a wall within distance=10 (distance: " << _wm->getCameraSensorValue(i,5) << ")!\n";
+                std::cout << "robot no." << _wm->_id << " sees a wall within distance=10 (distance: " << _wm->getCameraSensorValue(i,SENSOR_DISTANCEVALUE) << ")!\n";
             }
         }
     }

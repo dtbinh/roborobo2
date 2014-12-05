@@ -42,13 +42,9 @@
 		3749E178195D7EE900DC68AA /* BasicProjectAgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E175195D7EE900DC68AA /* BasicProjectAgentObserver.cpp */; };
 		3749E179195D7EE900DC68AA /* BasicProjectController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E176195D7EE900DC68AA /* BasicProjectController.cpp */; };
 		3749E17A195D7EE900DC68AA /* BasicProjectWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E177195D7EE900DC68AA /* BasicProjectWorldObserver.cpp */; };
-		3749E184195D809C00DC68AA /* SandboxAgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E181195D809C00DC68AA /* SandboxAgentObserver.cpp */; };
-		3749E185195D809C00DC68AA /* SandboxController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E182195D809C00DC68AA /* SandboxController.cpp */; };
-		3749E186195D809C00DC68AA /* SandboxWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E183195D809C00DC68AA /* SandboxWorldObserver.cpp */; };
 		3749E188195D823900DC68AA /* BasicProjectConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E187195D823900DC68AA /* BasicProjectConfigurationLoader.cpp */; };
 		375BA8531870CBF600D335FD /* CellularMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BA8521870CBF600D335FD /* CellularMap.cpp */; };
 		375FBD2011AC145500597CE9 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375FBD1F11AC145500597CE9 /* LogManager.cpp */; };
-		37764934195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37764933195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp */; };
 		3778DD65132EC3650000F4E6 /* Properties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3778DD63132EC3650000F4E6 /* Properties.cpp */; };
 		3778DD66132EC3650000F4E6 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3778DD64132EC3650000F4E6 /* StringUtils.cpp */; };
 		378B2C4E0FE6AF4600B90B67 /* ExtendedProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 378B2C4D0FE6AF4600B90B67 /* ExtendedProperties.cpp */; };
@@ -156,12 +152,6 @@
 		3749E175195D7EE900DC68AA /* BasicProjectAgentObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicProjectAgentObserver.cpp; sourceTree = "<group>"; };
 		3749E176195D7EE900DC68AA /* BasicProjectController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicProjectController.cpp; sourceTree = "<group>"; };
 		3749E177195D7EE900DC68AA /* BasicProjectWorldObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicProjectWorldObserver.cpp; sourceTree = "<group>"; };
-		3749E17D195D809C00DC68AA /* SandboxAgentObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandboxAgentObserver.h; sourceTree = "<group>"; };
-		3749E17E195D809C00DC68AA /* SandboxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandboxController.h; sourceTree = "<group>"; };
-		3749E17F195D809C00DC68AA /* SandboxWorldObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandboxWorldObserver.h; sourceTree = "<group>"; };
-		3749E181195D809C00DC68AA /* SandboxAgentObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SandboxAgentObserver.cpp; sourceTree = "<group>"; };
-		3749E182195D809C00DC68AA /* SandboxController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SandboxController.cpp; sourceTree = "<group>"; };
-		3749E183195D809C00DC68AA /* SandboxWorldObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SandboxWorldObserver.cpp; sourceTree = "<group>"; };
 		3749E187195D823900DC68AA /* BasicProjectConfigurationLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicProjectConfigurationLoader.cpp; sourceTree = "<group>"; };
 		3749E189195D824900DC68AA /* BasicProjectConfigurationLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicProjectConfigurationLoader.h; sourceTree = "<group>"; };
 		3754B7B00FD097C300EAC800 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = World.h; path = World/World.h; sourceTree = "<group>"; };
@@ -172,8 +162,6 @@
 		375BA8521870CBF600D335FD /* CellularMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CellularMap.cpp; sourceTree = "<group>"; };
 		375FBD1B11AC13B200597CE9 /* LogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogManager.h; sourceTree = "<group>"; };
 		375FBD1F11AC145500597CE9 /* LogManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogManager.cpp; sourceTree = "<group>"; };
-		37764932195D9A34003D82E3 /* SandboxConfigurationLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SandboxConfigurationLoader.h; sourceTree = "<group>"; };
-		37764933195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SandboxConfigurationLoader.cpp; sourceTree = "<group>"; };
 		3778DD63132EC3650000F4E6 /* Properties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Properties.cpp; sourceTree = "<group>"; };
 		3778DD64132EC3650000F4E6 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		378B2C4D0FE6AF4600B90B67 /* ExtendedProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtendedProperties.cpp; sourceTree = "<group>"; };
@@ -352,7 +340,6 @@
 				378FE9721A2F4FC600E95179 /* Boids */,
 				370DD54818E497620084BE83 /* DemoMedea */,
 				374E0CEF11AECDDC0003E446 /* BasicProject */,
-				3749E17B195D809C00DC68AA /* Sandbox */,
 			);
 			path = prj;
 			sourceTree = "<group>";
@@ -408,7 +395,6 @@
 				3749E189195D824900DC68AA /* BasicProjectConfigurationLoader.h */,
 				378FE9811A2F4FD700E95179 /* BoidsConfigurationLoader.h */,
 				372B8E4D137B303B00E7276B /* DemoMedeaConfigurationLoader.h */,
-				37764932195D9A34003D82E3 /* SandboxConfigurationLoader.h */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -464,7 +450,6 @@
 				37ECDD16136AF6370037E7CE /* LandmarkObject.cpp */,
 				37F3D927190A5E5D0093536D /* PhysicalObjectFactory.cpp */,
 				37F3D92C190A7BA70093536D /* RoundObject.cpp */,
-				37764933195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp */,
 				37F4E7E6190C02F900E6EA45 /* SwitchObject.cpp */,
 			);
 			path = ext;
@@ -546,35 +531,6 @@
 				370E46510FD41B5B001E0985 /* World */,
 			);
 			path = ext;
-			sourceTree = "<group>";
-		};
-		3749E17B195D809C00DC68AA /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				3749E17C195D809C00DC68AA /* include */,
-				3749E180195D809C00DC68AA /* src */,
-			);
-			path = Sandbox;
-			sourceTree = "<group>";
-		};
-		3749E17C195D809C00DC68AA /* include */ = {
-			isa = PBXGroup;
-			children = (
-				3749E17D195D809C00DC68AA /* SandboxAgentObserver.h */,
-				3749E17E195D809C00DC68AA /* SandboxController.h */,
-				3749E17F195D809C00DC68AA /* SandboxWorldObserver.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		3749E180195D809C00DC68AA /* src */ = {
-			isa = PBXGroup;
-			children = (
-				3749E181195D809C00DC68AA /* SandboxAgentObserver.cpp */,
-				3749E182195D809C00DC68AA /* SandboxController.cpp */,
-				3749E183195D809C00DC68AA /* SandboxWorldObserver.cpp */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		374E0CEF11AECDDC0003E446 /* BasicProject */ = {
@@ -778,7 +734,6 @@
 				002F3A2E09D0888800EBEB88 /* SDLMain.m in Sources */,
 				3720BD0E0F7D149100D5FF81 /* Agent.cpp in Sources */,
 				370DD55B18E497620084BE83 /* DemoMedeaWorldObserver.cpp in Sources */,
-				3749E186195D809C00DC68AA /* SandboxWorldObserver.cpp in Sources */,
 				378FE97D1A2F4FC600E95179 /* BoidsAgentObserver.cpp in Sources */,
 				37F4E7F0190C1D0400E6EA45 /* PhysicalObject.cpp in Sources */,
 				3720BD0F0F7D149100D5FF81 /* AgentObserver.cpp in Sources */,
@@ -806,7 +761,6 @@
 				3749E17A195D7EE900DC68AA /* BasicProjectWorldObserver.cpp in Sources */,
 				37F4E7F4190C1D1B00E6EA45 /* SquareObject.cpp in Sources */,
 				37E550CF184DE7400041C388 /* Geometry.cpp in Sources */,
-				3749E185195D809C00DC68AA /* SandboxController.cpp in Sources */,
 				3778DD65132EC3650000F4E6 /* Properties.cpp in Sources */,
 				3778DD66132EC3650000F4E6 /* StringUtils.cpp in Sources */,
 				370DD55718E497620084BE83 /* DemoMedeaAgentObserver.cpp in Sources */,
@@ -817,7 +771,6 @@
 				3701DAB11382892400B12539 /* Elman.cpp in Sources */,
 				370DD55A18E497620084BE83 /* DemoMedeaSharedData.cpp in Sources */,
 				378FE9801A2F4FC600E95179 /* BoidsWorldObserver.cpp in Sources */,
-				37764934195D9ADE003D82E3 /* SandboxConfigurationLoader.cpp in Sources */,
 				37F4E7F2190C1D1200E6EA45 /* CircleObject.cpp in Sources */,
 				3701DAB21382892400B12539 /* LayeredNeuralNetwork.cpp in Sources */,
 				3749E188195D823900DC68AA /* BasicProjectConfigurationLoader.cpp in Sources */,
@@ -826,7 +779,6 @@
 				37F4E7E5190BF88500E6EA45 /* GateObject.cpp in Sources */,
 				3701DAB41382892400B12539 /* NeuralNetwork.cpp in Sources */,
 				370DD55E18E4A4390084BE83 /* Graphics.cpp in Sources */,
-				3749E184195D809C00DC68AA /* SandboxAgentObserver.cpp in Sources */,
 				3749E178195D7EE900DC68AA /* BasicProjectAgentObserver.cpp in Sources */,
 				3749E179195D7EE900DC68AA /* BasicProjectController.cpp in Sources */,
 				3701DAB51382892400B12539 /* NeuralNetworkException.cpp in Sources */,
