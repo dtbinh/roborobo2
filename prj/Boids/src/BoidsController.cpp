@@ -33,7 +33,6 @@ void BoidsController::reset()
 {
 }
 
-/**/
 void BoidsController::step()
 {
     _iteration++;
@@ -66,7 +65,7 @@ void BoidsController::step()
     double avgCenterOfMass_Y = 0;
     
     double minDist = gSensorRange+1;
-    double closestRobotDeltaOrientation = 0;
+    // double closestRobotDeltaOrientation = 0; // unused
     
     int nbNeighbours = 0;
     
@@ -110,7 +109,7 @@ void BoidsController::step()
             if ( dist < minDist )
             {
                 minDist = dist;
-                closestRobotDeltaOrientation = delta_orientation;
+                //closestRobotDeltaOrientation = delta_orientation; // unused
             }
         }
         else
@@ -218,7 +217,6 @@ void BoidsController::step()
         _wm->_desiredTranslationalValue = 3;
     }
 }
-/**/
 
 /*
 void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (moving like an idiot , gathering sensory information for nothing)
@@ -308,4 +306,4 @@ void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (mo
     _wm->_desiredTranslationalValue = 3;
     
 }
-/**/
+*/
