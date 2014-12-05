@@ -367,13 +367,14 @@ bool World::loadFiles()
 	SDL_SetColorKey( gForegroundImage, SDL_SRCCOLORKEY, SDL_MapRGBA( gForegroundImage->format, 0xFF, 0xFF, 0xFF,0 ) );
 	SDL_SetColorKey( gEnvironmentImage, SDL_SRCCOLORKEY, SDL_MapRGBA( gEnvironmentImage->format, 0xFF, 0xFF, 0xFF,0 ) );
 
-	// preparing Environment Image (ie. only the BLUE component is used)
+	// preparing Environment Image (ie. anything not color white is an obstacle)
 	for ( int x = 0 ; x != gEnvironmentImage->w ; x++ )
 		for ( int y = 0 ; y != gEnvironmentImage->h ; y++ )
 		{
 			Uint32 pixel = getPixel32(gEnvironmentImage,x,y);
 			if ( pixel != SDL_MapRGBA( gEnvironmentImage->format, 0xFF, 0xFF, 0xFF, 0 ) )
-				putPixel32( gEnvironmentImage, x, y,  SDL_MapRGBA( gEnvironmentImage->format, 0, 0, pixel&0x0000FF,0 ) );
+				//putPixel32( gEnvironmentImage, x, y,  SDL_MapRGBA( gEnvironmentImage->format, 0, 0, pixel&0x0000FF, 0 ) ); // only the blue component is used
+                putPixel32( gEnvironmentImage, x, y,  SDL_MapRGBA( gEnvironmentImage->format, 0, 0, 0, 0 ) ); // BLACK
 		}
 
     //If everything loaded fine
