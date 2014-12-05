@@ -86,7 +86,7 @@ snapshot:
 	echo Now: $(DATE_TIME)
 	make distclean
 	rm -f roborobo-snapshot*.tar
-	cd .. ; export COPYFILE_DISABLE=TRUE ; tar --exclude='._*' --exclude='perso' --exclude='.DS_Store' --exclude='datalog_*' --exclude='properties_*' --exclude='roborobo-snapshot*' --exclude='.svn' --exclude='logs/*' -cvf $(DIR_NAME)/roborobo-snapshot-$(DATE_TIME).tar $(DIR_NAME)
+	cd .. ; export COPYFILE_DISABLE=TRUE ; tar --exclude='._*' --exclude='perso' --exclude='.DS_Store' --exclude='datalog_*' --exclude='properties_*' --exclude='roborobo-snapshot*' --exclude='.svn' --exclude='.git' --exclude='logs/*' -cvf $(DIR_NAME)/roborobo-snapshot-$(DATE_TIME).tar $(DIR_NAME)
 	@echo =-=-=-= 
 	@echo =-=-=-=
 	@echo =-=-=-=
@@ -95,7 +95,7 @@ snapshot:
 	@echo ALL files have been archived except:
 	@echo - datalog_* and properties_* files are NOT in the archive, wherever they were.
 	@echo - perso directory and content is NOT in the archive
-	@echo - .svn directories and content are NOT in the archive
+	@echo - .svn and .git directories and content are NOT in the archive
 	@echo - note: dont forget to re-compile as a make distclean was performed prior to building the archive
 	@echo =-=-=-=
 	@echo =-=-=-=

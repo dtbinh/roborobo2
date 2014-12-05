@@ -143,7 +143,7 @@ void BoidsController::step()
         }
         else
         {
-            // obstacle avoidance
+            // obstacle avoidance (assume 8 sensors, but works ok with 12)
             _wm->_desiredTranslationalValue =  + 1 - ( (double)gSensorRange - ((_wm->getCameraSensorValue(2,5)+_wm->getCameraSensorValue(3,5))/2) )  / (double)gSensorRange;
             if ( _wm->getCameraSensorValue(0,5) + _wm->getCameraSensorValue(1,5) + _wm->getCameraSensorValue(2,5) < _wm->getCameraSensorValue(3,5) + _wm->getCameraSensorValue(4,5) + _wm->getCameraSensorValue(5,5) )
                 _wm->_desiredRotationalVelocity = +5;
@@ -222,7 +222,7 @@ void BoidsController::step()
 /**/
 
 /*
-void BoidsController::step()
+void BoidsController::step() // THIS IS A TEMPLATE FOR PRACTICAL APPLICATION (moving like an idiot , gathering sensory information for nothing)
 {
     _iteration++;
     
@@ -249,6 +249,16 @@ void BoidsController::step()
     // * get random information from surroundings!
     // *
     
+    // Get distance to closest obstacle (wall or robot) from 8 sensors around the robot (works with the 12-sensors robot)
+    double leftSensor = _wm->getCameraSensorValue(0,5);
+    double leftFwdSensor = _wm->getCameraSensorValue(2,5);
+    double fwdSensor = _wm->getCameraSensorValue(4,5);
+    double rightFwdSensor = _wm->getCameraSensorValue(6,5);
+    double rightSensor = _wm->getCameraSensorValue(8,5);
+    double rightBwdSensor = _wm->getCameraSensorValue(9,5);
+    double bwdSensor = _wm->getCameraSensorValue(10,5);
+    double leftBwdSensor = _wm->getCameraSensorValue(11,5);
+
     int nbNeighbors = 0;
     
     for( int i = 0 ; i < _wm->_cameraSensorsNb ; i++)
