@@ -4,6 +4,7 @@
 #include "Config/BasicProjectConfigurationLoader.h"
 #include "Config/DemoMedeaConfigurationLoader.h"
 #include "Config/BoidsConfigurationLoader.h"
+#include "Config/PopGenModelsConfigurationLoader.h"
 //###DO-NOT-DELETE-THIS-LINE###TAG:INCLUDE###//
 
 
@@ -39,6 +40,12 @@ ConfigurationLoader* ConfigurationLoader::make_ConfigurationLoader (std::string 
 	else if (configurationLoaderObjectName == "BoidsConfigurationLoader" )
 	{
 		return new BoidsConfigurationLoader();
+	}
+#endif
+#if defined PRJ_POPGENMODELS || !defined MODULAR
+	else if (configurationLoaderObjectName == "PopGenModelsConfigurationLoader" )
+	{
+		return new PopGenModelsConfigurationLoader();
 	}
 #endif
     //###DO-NOT-DELETE-THIS-LINE###TAG:SWITCH###//
