@@ -47,6 +47,8 @@ PopGenModelsWorldObserver::PopGenModelsWorldObserver( World* world ) : WorldObse
     
     gProperties.checkAndGetPropertyValue("gLogGenome",&PopGenModelsSharedData::gLogGenome,false);
     
+    gProperties.checkAndGetPropertyValue("gIndividualMutationRate",&PopGenModelsSharedData::gIndividualMutationRate,false);
+    
     // ====
     
     if ( !gRadioNetwork)

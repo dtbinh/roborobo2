@@ -40,3 +40,5 @@ int PopGenModelsSharedData::gNotListeningStateDelay = 0;    // -1: infinite ; 0:
 int PopGenModelsSharedData::gListeningStateDelay = -1;      // -1: infinite ; 0: no delay ; >0: delay (ignored if gNotListeningStateDelay=-1)
 
 bool PopGenModelsSharedData::gLogGenome = false;
+
+double PopGenModelsSharedData::gIndividualMutationRate = 0.1; // defaut value

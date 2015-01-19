@@ -439,8 +439,14 @@ void PopGenModelsController::selectRandomGenome()
         
         _currentGenome = (*it).second;
         
-        mutate(_sigmaList[(*it).first]);
+        // mutate(_sigmaList[(*it).first]); // vanilla MEDEA
         
+        // modified medea
+        if ( PopGenModelsSharedData::gIndividualMutationRate > rand()/RAND_MAX )
+            mutate(_sigmaList[(*it).first]);
+        else
+            _sigmaList[(*it).first];
+
         setNewGenomeStatus(true);
         
         _birthdate = gWorld->getIterations();
