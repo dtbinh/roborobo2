@@ -89,11 +89,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/boids.properties"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/popgenmodel_default.properties"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-o logs/"
