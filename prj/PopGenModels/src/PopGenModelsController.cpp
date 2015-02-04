@@ -426,7 +426,7 @@ void PopGenModelsController::stepEvolution()
 
 
 void PopGenModelsController::selectRandomGenome()
-{o
+{
     if(_genomesList.size() != 0)
     {
         int randomIndex = rand()%_genomesList.size();
