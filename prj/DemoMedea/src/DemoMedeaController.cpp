@@ -532,6 +532,24 @@ void DemoMedeaController::mutate( float sigma) // mutate within bounds.
 }
 
 
+void DemoMedeaController::mutateUniform() // mutate within bounds.
+{
+    _genome.clear();
+    
+    for (unsigned int i = 0 ; i != _currentGenome.size() ; i++ )
+    {
+        float randomValue = float(rand()%100) / 100.0; // in [0,1[
+        double range = _maxValue - _minValue;
+        double value = randomValue * range + _minValue;
+        
+        _genome.push_back(value);
+    }
+    
+    _currentGenome = _genome;
+    
+}
+
+
 void DemoMedeaController::resetRobot()
 {
     _nbInputs = 0;

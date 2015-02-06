@@ -48,6 +48,7 @@ private:
     void selectFirstGenome();
     
     void mutate(float sigma);
+    void mutateUniform();
     
     void stepBehaviour();
     void stepEvolution();
