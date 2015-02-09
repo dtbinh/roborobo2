@@ -46,7 +46,13 @@ public:
     static int gNotListeningStateDelay; // -1: infinite ; 0: no delay ; >0: delay
     static int gListeningStateDelay;    // -1: infinite ; 0: no delay ; >0: delay (ignored if gNotListeningStateDelay=-1)
     
-    static bool gLogGenome; 
+    static bool gLogGenome;
+    
+    static double gIndividualMutationRate;
+    
+    static int gMutationOperator;
+    
+    static double gSigma;
     
     // -----
     

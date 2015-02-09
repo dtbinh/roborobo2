@@ -47,6 +47,13 @@ DemoMedeaWorldObserver::DemoMedeaWorldObserver( World* world ) : WorldObserver( 
     
     gProperties.checkAndGetPropertyValue("gLogGenome",&DemoMedeaSharedData::gLogGenome,false);
     
+    gProperties.checkAndGetPropertyValue("gIndividualMutationRate",&DemoMedeaSharedData::gIndividualMutationRate,false);
+
+    gProperties.checkAndGetPropertyValue("gMutationOperator",&DemoMedeaSharedData::gMutationOperator,false);
+    
+    gProperties.checkAndGetPropertyValue("gSigma",&DemoMedeaSharedData::gSigma,false);
+
+    
     // ====
     
     if ( !gRadioNetwork)

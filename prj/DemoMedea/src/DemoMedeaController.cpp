@@ -439,8 +439,26 @@ void DemoMedeaController::selectRandomGenome()
         
         _currentGenome = (*it).second;
         
-        mutate(_sigmaList[(*it).first]);
         
+        // mutate(_sigmaList[(*it).first]); // vanilla MEDEA
+        // modified medea
+        if ( DemoMedeaSharedData::gIndividualMutationRate > rand()/RAND_MAX )
+        {
+            switch ( DemoMedeaSharedData::gMutationOperator )
+            {
+                case 0:
+                    mutateUniform();
+                    break;
+                case 1:
+                    mutate(_sigmaList[(*it).first]);
+                    break;
+                case 2:
+                    mutate(DemoMedeaSharedData::gSigma);
+            }
+        }
+        else
+            _sigmaList[(*it).first];
+
         setNewGenomeStatus(true);
         
         _birthdate = gWorld->getIterations();

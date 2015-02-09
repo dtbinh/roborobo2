@@ -85,11 +85,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/default-medea.properties"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/boids.properties"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/popgenmodel_default.properties"

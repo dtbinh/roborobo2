@@ -40,3 +40,9 @@ int DemoMedeaSharedData::gNotListeningStateDelay = 0;    // -1: infinite ; 0: no
 int DemoMedeaSharedData::gListeningStateDelay = -1;      // -1: infinite ; 0: no delay ; >0: delay (ignored if gNotListeningStateDelay=-1)
 
 bool DemoMedeaSharedData::gLogGenome = false;
+
+double DemoMedeaSharedData::gIndividualMutationRate = 1.0;
+
+int DemoMedeaSharedData::gMutationOperator = 1; // 0: uniform, 1: gaussian
+
+double DemoMedeaSharedData::gSigma = 0.01; // 0.01 is just some random value.
