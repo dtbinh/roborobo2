@@ -238,7 +238,9 @@ void Robot::reset()
 	str_orient += out.str();
 	str_orient += "].orientation";
 	if ( gProperties.hasProperty( str_orient ) )
+    {
 		convertFromString<double>(_wm->_agentAbsoluteOrientation, gProperties.getProperty( str_orient ), std::dec);
+    }
 	else
 	{
 		_wm->_agentAbsoluteOrientation = ranf() * 360. - 180.;
