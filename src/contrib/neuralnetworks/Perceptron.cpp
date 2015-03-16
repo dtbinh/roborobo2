@@ -33,7 +33,7 @@ Perceptron::~Perceptron() {
 }
 
 std::string Perceptron::toString() const {
-	return NeuralNetwork::toString();
+	return LayeredNeuralNetwork::toString();
 }
 
 

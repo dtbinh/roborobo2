@@ -80,6 +80,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-l config/default-wander_bigrobots_forMyriam.properties"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-l config/default-wander_bigrobots.properties"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -88,12 +92,16 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-l config/specialize-medea_default.properties"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-l config/test.properties"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/boids.properties"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/popgenmodel_default.properties"

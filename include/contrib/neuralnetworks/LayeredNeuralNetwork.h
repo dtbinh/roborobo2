@@ -80,7 +80,10 @@ namespace Neural {
 			virtual LayeredNeuralNetwork* clone() const = 0;
 
 			/**
-			 * {@InheritDoc}
+			 * Return a string representing the number of neurons and connexions of each layer
+			 * E.g.: 
+			 *  nn(18(+1);5[19];2[6])   --> input layer: 18 neurons, 1 bias neuron; hidden layer: 5 neurons, 19 connexions; output layer: 2 neurons, 6 connexions
+			 *  nn(18;2[18])			--> input layer: 18 neurons; output layer: 2 neurons, 18 connexions
 			 */
 			virtual std::string toString() const;
 

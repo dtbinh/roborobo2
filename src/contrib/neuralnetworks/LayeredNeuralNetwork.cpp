@@ -64,8 +64,28 @@ void LayeredNeuralNetwork::initNbNeuronsPerLayer(std::vector<unsigned int>& nbNe
 	_nbNeuronsPerLayer[nbNeuronsPerHiddenLayer.size() + 1] = _nbOutputs;
 }
 
+
 std::string LayeredNeuralNetwork::toString() const {
-	return NeuralNetwork::toString();
+	std::stringstream ss;
+	ss << "nn(";
+
+	ss << _nbInputs;
+	if(_activeBiais)
+		ss << "(+1)";
+
+	for(size_t i = 1; i < _nbNeuronsPerLayer.size(); i++) {
+		ss << ";";
+		ss << _nbNeuronsPerLayer[i];
+		ss << "[";
+		int nbConnexions = _nbNeuronsPerLayer[i - 1];
+		if(_activeBiais && !_onlyUseBiaisForFirstHiddenLayer)
+			++nbConnexions;
+		ss <<  nbConnexions;
+		ss << "]";
+	}
+
+	ss << ")";
+	return ss.str();
 }
 
 bool LayeredNeuralNetwork::getActiveBiais() const {

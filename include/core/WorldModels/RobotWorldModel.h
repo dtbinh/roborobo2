@@ -186,6 +186,7 @@ public:
     int getId() { return _id; }
     
     void updateLandmarkSensor(); // update with closest landmark
+    void updateLandmarkSensorWith( int __landmarkId ); // update with a specific landmark
     
     double getLandmarkDirectionAngleValue() { return _landmarkDirectionAngleValue; }
     double getLandmarkDistanceValue() { return _landmarkDistanceValue; }

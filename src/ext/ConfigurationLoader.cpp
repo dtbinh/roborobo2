@@ -5,6 +5,7 @@
 #include "Config/DemoMedeaConfigurationLoader.h"
 #include "Config/BoidsConfigurationLoader.h"
 #include "Config/PopGenModelsConfigurationLoader.h"
+#include "Config/MedeaSpecializationConfigurationLoader.h"
 //###DO-NOT-DELETE-THIS-LINE###TAG:INCLUDE###//
 
 
@@ -46,6 +47,12 @@ ConfigurationLoader* ConfigurationLoader::make_ConfigurationLoader (std::string 
 	else if (configurationLoaderObjectName == "PopGenModelsConfigurationLoader" )
 	{
 		return new PopGenModelsConfigurationLoader();
+	}
+#endif
+#if defined PRJ_MEDEASPECIALIZATION || !defined MODULAR
+	else if (configurationLoaderObjectName == "MedeaSpecializationConfigurationLoader" )
+	{
+		return new MedeaSpecializationConfigurationLoader();
 	}
 #endif
     //###DO-NOT-DELETE-THIS-LINE###TAG:SWITCH###//

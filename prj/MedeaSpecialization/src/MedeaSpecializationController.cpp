@@ -3,8 +3,8 @@
  * NNlib: Leo Cazenille <leo.cazenille@upmc.fr>
  */
 
-#include "DemoMedea/include/DemoMedeaController.h"
-#include "DemoMedea/include/DemoMedeaWorldObserver.h"
+#include "MedeaSpecialization/include/MedeaSpecializationController.h"
+#include "MedeaSpecialization/include/MedeaSpecializationWorldObserver.h"
 
 #include "World/World.h"
 #include "Utilities/Misc.h"
@@ -17,7 +17,7 @@
 
 using namespace Neural;
 
-DemoMedeaController::DemoMedeaController( RobotWorldModel *wm )
+MedeaSpecializationController::MedeaSpecializationController( RobotWorldModel *wm )
 {
     _wm = wm;
     
@@ -28,7 +28,7 @@ DemoMedeaController::DemoMedeaController( RobotWorldModel *wm )
     _minValue = -1.0;
     _maxValue = 1.0;
     
-    _currentSigma = DemoMedeaSharedData::gSigmaRef;
+    _currentSigma = MedeaSpecializationSharedData::gSigmaRef;
     
     resetRobot();
     
@@ -39,36 +39,37 @@ DemoMedeaController::DemoMedeaController( RobotWorldModel *wm )
     _birthdate = 0;
     
     _isListening = true;
-    _notListeningDelay = DemoMedeaSharedData::gNotListeningStateDelay;
-    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+    _notListeningDelay = MedeaSpecializationSharedData::gNotListeningStateDelay;
+    _listeningDelay = MedeaSpecializationSharedData::gListeningStateDelay;
     
     _nbGenomeTransmission = 0;
     
     if ( gEnergyLevel )
         _wm->setEnergyLevel(gEnergyInit);
     
-    _wm->updateLandmarkSensor();
+    // pre-compute closest landmark information (0 or 1)
+    _wm->updateLandmarkSensorWith(geneSkill);
     
     _wm->setAlive(true);
     _wm->setRobotLED_colorValues(255, 0, 0);
     
 }
 
-DemoMedeaController::~DemoMedeaController()
+MedeaSpecializationController::~MedeaSpecializationController()
 {
     _parameters.clear();
     delete nn;
     nn = NULL;
 }
 
-void DemoMedeaController::reset()
+void MedeaSpecializationController::reset()
 {
     _parameters.clear();
     _parameters = _genome;
 }
 
 
-void DemoMedeaController::step()
+void MedeaSpecializationController::step()
 {
     _iteration++;
     
@@ -101,7 +102,7 @@ void DemoMedeaController::step()
             if ( _notListeningDelay == 0 )
             {
                 
-                _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+                _listeningDelay = MedeaSpecializationSharedData::gListeningStateDelay;
                 
                 if ( _listeningDelay > 0 || _listeningDelay == -1 )
                 {
@@ -159,13 +160,11 @@ void DemoMedeaController::step()
 
 
 
-void DemoMedeaController::stepBehaviour()
+void MedeaSpecializationController::stepBehaviour()
 {
-    // pre-compute closest landmark information (if needed)
-    if ( gLandmarks.size() > 0 )
-    {
-        _wm->updateLandmarkSensor();
-    }
+    // pre-compute closest landmark information (0 or 1)
+    _wm->updateLandmarkSensorWith(geneSkill);
+    //_wm->updateLandmarkSensor();
     
     // ---- Build inputs ----
     
@@ -288,12 +287,10 @@ void DemoMedeaController::stepBehaviour()
     (*inputs)[inputToUse++] = (double)_wm->getGroundSensor_greenValue()/255.0;
     (*inputs)[inputToUse++] = (double)_wm->getGroundSensor_blueValue()/255.0;
     
-    // closest landmark (if exists)
-    if ( gLandmarks.size() > 0 )
-    {
-        (*inputs)[inputToUse++] = _wm->getLandmarkDirectionAngleValue();
-        (*inputs)[inputToUse++] = _wm->getLandmarkDistanceValue();
-    }
+    // landmark (targeted landmark depends on g_skill)
+    (*inputs)[inputToUse++] = _wm->getLandmarkDirectionAngleValue();
+    (*inputs)[inputToUse++] = _wm->getLandmarkDistanceValue();
+
     
     // energy level
     if ( gEnergyLevel )
@@ -316,7 +313,7 @@ void DemoMedeaController::stepBehaviour()
     _wm->_desiredTranslationalValue = outputs[0];
     _wm->_desiredRotationalVelocity = outputs[1];
     
-    if ( DemoMedeaSharedData::gEnergyRequestOutput )
+    if ( MedeaSpecializationSharedData::gEnergyRequestOutput )
     {
         _wm->setEnergyRequestValue(outputs[2]);
     }
@@ -329,12 +326,12 @@ void DemoMedeaController::stepBehaviour()
 }
 
 
-void DemoMedeaController::createNN()
+void MedeaSpecializationController::createNN()
 {
     if ( nn != NULL ) // useless: delete will anyway check if nn is NULL or not.
         delete nn;
     
-    switch ( DemoMedeaSharedData::gControllerType )
+    switch ( MedeaSpecializationSharedData::gControllerType )
     {
         case 0:
         {
@@ -355,13 +352,13 @@ void DemoMedeaController::createNN()
             break;
         }
         default: // default: no controller
-            std::cerr << "[ERROR] gController type unknown (value: " << DemoMedeaSharedData::gControllerType << ").\n";
+            std::cerr << "[ERROR] gController type unknown (value: " << MedeaSpecializationSharedData::gControllerType << ").\n";
             exit(-1);
     };
 }
 
 
-unsigned int DemoMedeaController::computeRequiredNumberOfWeights()
+unsigned int MedeaSpecializationController::computeRequiredNumberOfWeights()
 {
     unsigned int res = nn->getRequiredNumberOfWeights();
     return res;
@@ -373,7 +370,7 @@ unsigned int DemoMedeaController::computeRequiredNumberOfWeights()
 // ################ ######################## ################
 // ################ ######################## ################
 
-void DemoMedeaController::stepEvolution()
+void MedeaSpecializationController::stepEvolution()
 {
     
     // * broadcasting genome : robot broadcasts its genome to all neighbors (contact-based wrt proximity sensors)
@@ -384,8 +381,8 @@ void DemoMedeaController::stepEvolution()
     }
     
     // * lifetime ended: replace genome (if possible)
-    if( gWorld->getIterations() > 0 && gWorld->getIterations() % DemoMedeaSharedData::gEvaluationTime == 0 )
-                    //dynamic_cast<DemoMedeaWorldObserver*>(gWorld->getWorldObserver())->getGenerationItCount() == 0 )  //todelete
+    if( gWorld->getIterations() > 0 && gWorld->getIterations() % MedeaSpecializationSharedData::gEvaluationTime == 0 )
+                    //dynamic_cast<MedeaSpecializationWorldObserver*>(gWorld->getWorldObserver())->getGenerationItCount() == 0 )  //todelete
     {
         loadNewGenome();
         _nbGenomeTransmission = 0;
@@ -396,7 +393,7 @@ void DemoMedeaController::stepEvolution()
     }
     
     // log the genome (only at the second iteration during snapshot time)
-    if ( DemoMedeaSharedData::gLogGenome && gWorld->getIterations() % ( DemoMedeaSharedData::gEvaluationTime * DemoMedeaSharedData::gSnapshotsFrequency ) == 1 )
+    if ( MedeaSpecializationSharedData::gLogGenome && gWorld->getIterations() % ( MedeaSpecializationSharedData::gEvaluationTime * MedeaSpecializationSharedData::gSnapshotsFrequency ) == 1 )
     {
         // Logging: full genome
         std::string sLog = std::string("");
@@ -427,7 +424,7 @@ void DemoMedeaController::stepEvolution()
 }
 
 
-void DemoMedeaController::selectRandomGenome()
+void MedeaSpecializationController::selectRandomGenome()
 {
     if(_genomesList.size() != 0)
     {
@@ -444,9 +441,9 @@ void DemoMedeaController::selectRandomGenome()
         // ## mutation scheme :: start
         
         // modified medea
-        if ( DemoMedeaSharedData::gIndividualMutationRate > rand()/RAND_MAX )
+        if ( MedeaSpecializationSharedData::gIndividualMutationRate > rand()/RAND_MAX )
         {
-            switch ( DemoMedeaSharedData::gMutationOperator )
+            switch ( MedeaSpecializationSharedData::gMutationOperator )
             {
                 case 0:
                     mutateUniform();
@@ -455,7 +452,7 @@ void DemoMedeaController::selectRandomGenome()
                     mutate(_sigmaList[(*it).first]); // vanilla MEDEA, used before year 2015
                     break;
                 case 2:
-                    mutate(DemoMedeaSharedData::gSigma);
+                    mutate(MedeaSpecializationSharedData::gSigma);
                     break;
             }
         }
@@ -478,7 +475,7 @@ void DemoMedeaController::selectRandomGenome()
     }
 }
 
-void DemoMedeaController::selectFirstGenome()
+void MedeaSpecializationController::selectFirstGenome()
 {
     if(_genomesList.size() != 0)
     {
@@ -500,7 +497,7 @@ void DemoMedeaController::selectFirstGenome()
     }
 }
 
-bool DemoMedeaController::storeGenome(std::vector<double> genome, int senderId, int senderBirthdate, float sigma)
+bool MedeaSpecializationController::storeGenome(std::vector<double> genome, int senderId, int senderBirthdate, float sigma)
 {
     std::map<int,int>::const_iterator it = _birthdateList.find(senderBirthdate);
     
@@ -516,7 +513,7 @@ bool DemoMedeaController::storeGenome(std::vector<double> genome, int senderId, 
 }
 
 
-void DemoMedeaController::mutate( float sigma) // mutate within bounds.
+void MedeaSpecializationController::mutate( float sigma) // mutate within bounds.
 {
     _genome.clear();
     
@@ -555,7 +552,7 @@ void DemoMedeaController::mutate( float sigma) // mutate within bounds.
 }
 
 
-void DemoMedeaController::mutateUniform() // mutate within bounds.
+void MedeaSpecializationController::mutateUniform() // mutate within bounds.
 {
     _genome.clear();
     
@@ -573,7 +570,7 @@ void DemoMedeaController::mutateUniform() // mutate within bounds.
 }
 
 
-void DemoMedeaController::resetRobot()
+void MedeaSpecializationController::resetRobot()
 {
     _nbInputs = 0;
     
@@ -589,14 +586,14 @@ void DemoMedeaController::resetRobot()
         _nbInputs += 2; // incl. landmark (angle,dist)
     
     _nbOutputs = 2;
-    if ( DemoMedeaSharedData::gEnergyRequestOutput )
+    if ( MedeaSpecializationSharedData::gEnergyRequestOutput )
         _nbOutputs += 1; // incl. energy request
     
-    _nbHiddenLayers = DemoMedeaSharedData::gNbHiddenLayers;
+    _nbHiddenLayers = MedeaSpecializationSharedData::gNbHiddenLayers;
     
     _nbNeuronsPerHiddenLayer = new std::vector<unsigned int>(_nbHiddenLayers);
     for(unsigned int i = 0; i < _nbHiddenLayers; i++)
-        (*_nbNeuronsPerHiddenLayer)[i] = DemoMedeaSharedData::gNbNeuronsPerHiddenLayer;
+        (*_nbNeuronsPerHiddenLayer)[i] = MedeaSpecializationSharedData::gNbNeuronsPerHiddenLayer;
     
     createNN();
     
@@ -607,10 +604,18 @@ void DemoMedeaController::resetRobot()
     
     _genome.clear();
     
+    // Intialize genome
+    
     for ( unsigned int i = 0 ; i != nbGene ; i++ )
     {
-        _genome.push_back((double)(rand()%DemoMedeaSharedData::gNeuronWeightRange)/(DemoMedeaSharedData::gNeuronWeightRange/2)-1.0); // weights: random init between -1 and +1
+        _genome.push_back((double)(rand()%MedeaSpecializationSharedData::gNeuronWeightRange)/(MedeaSpecializationSharedData::gNeuronWeightRange/2)-1.0); // weights: random init between -1 and +1
     }
+    
+    //geneSkill = rand()%2;
+    geneSkill =  _wm->getId()%2;
+    
+    // initialize robot
+    
     _currentGenome = _genome;
     setNewGenomeStatus(true);
     _genomesList.clear();
@@ -618,11 +623,11 @@ void DemoMedeaController::resetRobot()
 }
 
 
-void DemoMedeaController::broadcastGenome()
+void MedeaSpecializationController::broadcastGenome()
 {
     // remarque \todo: limiting genome transmission is sensitive to sensor order. (but: assume ok)
     
-    for( int i = 0 ; i < _wm->_cameraSensorsNb && ( DemoMedeaSharedData::gLimitGenomeTransmission == false || ( DemoMedeaSharedData::gLimitGenomeTransmission == true && _nbGenomeTransmission < DemoMedeaSharedData::gMaxNbGenomeTransmission ) ); i++)
+    for( int i = 0 ; i < _wm->_cameraSensorsNb && ( MedeaSpecializationSharedData::gLimitGenomeTransmission == false || ( MedeaSpecializationSharedData::gLimitGenomeTransmission == true && _nbGenomeTransmission < MedeaSpecializationSharedData::gMaxNbGenomeTransmission ) ); i++)
     {
         int targetIndex = _wm->getObjectIdFromCameraSensor(i);
         
@@ -630,7 +635,7 @@ void DemoMedeaController::broadcastGenome()
         {
             targetIndex = targetIndex - gRobotIndexStartOffset; // convert image registering index into robot id.
             
-            DemoMedeaController* targetRobotController = dynamic_cast<DemoMedeaController*>(gWorld->getRobot(targetIndex)->getController());
+            MedeaSpecializationController* targetRobotController = dynamic_cast<MedeaSpecializationController*>(gWorld->getRobot(targetIndex)->getController());
             
             if ( ! targetRobotController )
             {
@@ -643,25 +648,25 @@ void DemoMedeaController::broadcastGenome()
                 float dice = float(rand()%100) / 100.0;
                 float sigmaSendValue = _currentSigma;
                 
-                if ( dice <= DemoMedeaSharedData::gProbaMutation )
+                if ( dice <= MedeaSpecializationSharedData::gProbaMutation )
                 {
                     dice = float(rand() %100) / 100.0;
                     if ( dice < 0.5 )
                     {
-                        sigmaSendValue = _currentSigma * ( 1 + DemoMedeaSharedData::gUpdateSigmaStep ); // increase sigma
+                        sigmaSendValue = _currentSigma * ( 1 + MedeaSpecializationSharedData::gUpdateSigmaStep ); // increase sigma
                         
-                        if (sigmaSendValue > DemoMedeaSharedData::gSigmaMax)
+                        if (sigmaSendValue > MedeaSpecializationSharedData::gSigmaMax)
                         {
-                            sigmaSendValue = DemoMedeaSharedData::gSigmaMax;
+                            sigmaSendValue = MedeaSpecializationSharedData::gSigmaMax;
                         }
                     }
                     else
                     {
-                        sigmaSendValue = _currentSigma * ( 1 - DemoMedeaSharedData::gUpdateSigmaStep ); // decrease sigma
+                        sigmaSendValue = _currentSigma * ( 1 - MedeaSpecializationSharedData::gUpdateSigmaStep ); // decrease sigma
                         
-                        if ( sigmaSendValue < DemoMedeaSharedData::gSigmaMin )
+                        if ( sigmaSendValue < MedeaSpecializationSharedData::gSigmaMin )
                         {
-                            sigmaSendValue = DemoMedeaSharedData::gSigmaMin;
+                            sigmaSendValue = MedeaSpecializationSharedData::gSigmaMin;
                         }
                     }
                     
@@ -676,7 +681,7 @@ void DemoMedeaController::broadcastGenome()
     }
 }
 
-void DemoMedeaController::loadNewGenome()
+void MedeaSpecializationController::loadNewGenome()
 {
     if ( _wm->isAlive() || gEnergyRefill )  // ( gEnergyRefill == true ) enables revive
     {
@@ -688,7 +693,7 @@ void DemoMedeaController::loadNewGenome()
         {
             // case: 1+ genome(s) imported, random pick.
             
-            switch ( DemoMedeaSharedData::gSelectionMethod )
+            switch ( MedeaSpecializationSharedData::gSelectionMethod )
             {
                 case 0:
                     selectRandomGenome();
@@ -697,7 +702,7 @@ void DemoMedeaController::loadNewGenome()
                     selectFirstGenome();
                     break;
                 default:
-                    std::cerr << "[ERROR] unknown selection method (gSelectionMethod = " << DemoMedeaSharedData::gSelectionMethod << ")\n";
+                    std::cerr << "[ERROR] unknown selection method (gSelectionMethod = " << MedeaSpecializationSharedData::gSelectionMethod << ")\n";
                     exit(-1);
             }
             
@@ -757,12 +762,12 @@ void DemoMedeaController::loadNewGenome()
                 
                 _wm->setAlive(false); // inactive robot *must* import a genome from others (ie. no restart).
                 
-                if ( DemoMedeaSharedData::gNotListeningStateDelay != 0 ) // ie. -1 (infinite,dead) or >0 (temporary,mute)
+                if ( MedeaSpecializationSharedData::gNotListeningStateDelay != 0 ) // ie. -1 (infinite,dead) or >0 (temporary,mute)
                 {
                     _isListening = false;
 
-                    _notListeningDelay = DemoMedeaSharedData::gNotListeningStateDelay;
-                    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+                    _notListeningDelay = MedeaSpecializationSharedData::gNotListeningStateDelay;
+                    _listeningDelay = MedeaSpecializationSharedData::gListeningStateDelay;
                     _wm->setRobotLED_colorValues(0, 0, 255); // is not listening
                     
                     std::string sLog = std::string("");
@@ -773,7 +778,7 @@ void DemoMedeaController::loadNewGenome()
                 }
                 else
                 {
-                    _listeningDelay = DemoMedeaSharedData::gListeningStateDelay;
+                    _listeningDelay = MedeaSpecializationSharedData::gListeningStateDelay;
 
                     if ( _listeningDelay > 0 || _listeningDelay == -1 )
                     {
@@ -799,7 +804,7 @@ void DemoMedeaController::loadNewGenome()
     }
 }
 
-void DemoMedeaController::logCurrentState()
+void MedeaSpecializationController::logCurrentState()
 {
     // Logging
     std::string sLog = "" + std::to_string(gWorld->getIterations()) + "," + std::to_string(_wm->getId()) + "::" + std::to_string(_birthdate) +

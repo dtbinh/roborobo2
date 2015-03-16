@@ -82,7 +82,7 @@ LandmarkObject::~LandmarkObject()
 
 void LandmarkObject::step()
 {
-	if ( _visible && gDisplayMode == 0 )
+	if ( _visible && gDisplayMode != 2)
 	{
 		display();
 	}
@@ -90,10 +90,6 @@ void LandmarkObject::step()
 
 void LandmarkObject::display() // display on screen (called in the step() method if gDisplayMode=0 and _visible=true)
 {
-    Uint8 r = 0xFF;
-    Uint8 g = 0xD4;
-    Uint8 b = 0x82;
-    Uint8 a = 0x00;
     Uint32 color = SDL_MapRGBA(gBackgroundImage->format,r,g,b,a);
    
     

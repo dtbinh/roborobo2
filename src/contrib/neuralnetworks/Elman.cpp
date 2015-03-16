@@ -53,7 +53,28 @@ std::vector< std::vector<double> > const& Elman::getLastOutputs() const {
 
 
 std::string Elman::toString() const {
-	return LayeredNeuralNetwork::toString();
+	std::stringstream ss;
+	ss << "nn(";
+
+	ss << _nbInputs;
+	if(_activeBiais)
+		ss << "(+1)";
+
+	for(size_t i = 1; i < _nbNeuronsPerLayer.size(); i++) {
+		ss << ";";
+		ss << _nbNeuronsPerLayer[i];
+		ss << "[";
+		int nbConnexions = _nbNeuronsPerLayer[i - 1];
+		if(i != _nbNeuronsPerLayer.size() - 1)
+			nbConnexions += _nbNeuronsPerLayer[i];
+		if(_activeBiais && !_onlyUseBiaisForFirstHiddenLayer)
+			++nbConnexions;
+		ss << nbConnexions;
+		ss << "]";
+	}
+
+	ss << ")";
+	return ss.str();
 }
 
 

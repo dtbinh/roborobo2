@@ -48,6 +48,38 @@ void RobotWorldModel::initCameraSensors ( int nbSensors )
     _initSensor = true;
 }
 
+void RobotWorldModel::updateLandmarkSensorWith( int __landmarkId )
+{
+    if ( __landmarkId > gLandmarks.size() )
+    {
+        std::cout << "[ERROR] Landmark " << __landmarkId << " does not exist in RobotWorldModel::updateLandmarkSensorWith(landmarkId). Exiting." << std::endl;
+        exit (-1);
+    }
+    
+    Point2d posRobot(_xReal,_yReal);
+    Point2d landmarkCoordinates = gLandmarks[__landmarkId].getPosition();
+    
+    double distanceToLandmark = getEuclidianDistance (posRobot,landmarkCoordinates);
+    double diffAngleToLandmark = getAngleToTarget(posRobot,_agentAbsoluteOrientation,landmarkCoordinates);
+
+    setLandmarkDirectionAngleValue( diffAngleToLandmark / 180.0 );
+   
+    //cast the shortest distance between 0 and 1
+    if ( distanceToLandmark > gSensorRange )
+        setLandmarkDistanceValue(1.0);
+    else
+        setLandmarkDistanceValue( distanceToLandmark / (double)gSensorRange );
+    
+    // monitoring
+    if ( gVerbose && gDisplayMode <= 1 && gMonitorRobot && gRobotIndexFocus == getId() )
+    {
+        std::cout << "[ Target landmark " << __landmarkId << " : " << std::setw(8) << diffAngleToLandmark << "°, " <<  std::setw(10) << distanceToLandmark << "pix" << " ] --- [ ";
+        std::cout << "Sensor values  : " << std::setw(4) << getLandmarkDirectionAngleValue() << " , " << std::setw(4) << getLandmarkDistanceValue() << " ] --- [ ";
+        std::cout << "Battery-level  : " << std::setw(6) << getEnergyLevel() << " ] --- [";
+        std::cout << "Energy Requested (if asked) : " << std::setw(4) << getEnergyRequestValue() << " ]" << std::endl;
+    }
+
+}
 
 void RobotWorldModel::updateLandmarkSensor()
 {
@@ -90,7 +122,8 @@ void RobotWorldModel::updateLandmarkSensor()
         setLandmarkDistanceValue(1.0);
     else
         setLandmarkDistanceValue( distanceToClosestLandmark / (double)gSensorRange );
-    
+
+    // monitoring
     if ( gVerbose && gDisplayMode <= 1 && gMonitorRobot && gRobotIndexFocus == getId() )
     {
         std::cout << "[ Closest landmark : " << std::setw(8) << diffAngleToClosestLandmark << "°, " <<  std::setw(10) << distanceToClosestLandmark << "pix" << " ] --- [ ";

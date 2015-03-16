@@ -15,8 +15,14 @@
 class LandmarkObject
 {
 	private :
+
     int _id;
     static int _nextId;
+    
+    Uint8 r = 0xFF;
+    Uint8 g = 0xD4;
+    Uint8 b = 0x82;
+    Uint8 a = 0x00;
 	
 	protected :
     
@@ -42,6 +48,8 @@ class LandmarkObject
     
     void setPosition(Point2d position)
     {
+        hide(); // hide previous position (if any)
+        
         _position = position;
         _xCenterPixel = position.x;
         _yCenterPixel = position.y;
@@ -50,6 +58,14 @@ class LandmarkObject
     Point2d getPosition()
     {
         return _position;
+    }
+    
+    void setColor( Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a )
+    {
+        r = _r;
+        g = _g;
+        b = _b;
+        a = _a;
     }
     
     int getState() { return _state; }
