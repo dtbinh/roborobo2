@@ -81,7 +81,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/default-wander_bigrobots_forMyriam.properties"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/default-wander_bigrobots.properties"
@@ -90,6 +90,10 @@
          <CommandLineArgument
             argument = "-l config/default-medea.properties"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-l config/medea-sandbox.properties"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/specialize-medea_default.properties"

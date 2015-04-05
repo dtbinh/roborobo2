@@ -159,7 +159,6 @@ void MedeaSpecializationController::step()
 // ################ ######################## ################
 
 
-
 void MedeaSpecializationController::stepBehaviour()
 {
     // pre-compute closest landmark information (0 or 1)

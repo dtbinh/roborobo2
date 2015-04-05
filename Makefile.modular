@@ -1,6 +1,7 @@
 CC           = g++ 
 CCFLAGS      = -Wall -O3 -std=c++0x
 LDFLAGS      = `sdl-config --cflags --libs`
+LIBS      = 
 RM           = rm -f 
 MAKE         = make 
 INCLUDE      = -Iinclude/ext -Iinclude/contrib -Iinclude/core -Iprj/
@@ -48,9 +49,9 @@ verifyMods:
 $(TARGET): $(OBJ)
 ifeq ($(strip $(VERBOSE)),)
 	@echo "[LD]	" $@
-	@$(CC) $(LDFLAGS) -o $@ $^ -lSDL_image -lSDL 
+	@$(CC) $(LDFLAGS) -o $@ $^ -lSDL_image -lSDL $(LIBS)
 else
-	$(CC) $(LDFLAGS) -o $@ $^ -lSDL_image -lSDL 
+	$(CC) $(LDFLAGS) -o $@ $^ -lSDL_image -lSDL $(LIBS)
 endif
 
 %.o: %.cpp
