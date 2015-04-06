@@ -36,6 +36,8 @@
 		3720BD1E0F7D149100D5FF81 /* WorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3720BCE40F7D149100D5FF81 /* WorldObserver.cpp */; };
 		3720BD1F0F7D149100D5FF81 /* WorldModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3720BCE50F7D149100D5FF81 /* WorldModel.cpp */; };
 		372B8E4F137B305900E7276B /* DemoMedeaConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 372B8E4E137B305900E7276B /* DemoMedeaConfigurationLoader.cpp */; };
+		37328BD61AD2B10B00085923 /* libSDL-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37328BD41AD2B0F100085923 /* libSDL-1.2.0.dylib */; };
+		37328BD81AD2B15700085923 /* libSDL_image-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37328BD71AD2B15700085923 /* libSDL_image-1.2.0.dylib */; };
 		3749E178195D7EE900DC68AA /* BasicProjectAgentObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E175195D7EE900DC68AA /* BasicProjectAgentObserver.cpp */; };
 		3749E179195D7EE900DC68AA /* BasicProjectController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E176195D7EE900DC68AA /* BasicProjectController.cpp */; };
 		3749E17A195D7EE900DC68AA /* BasicProjectWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3749E177195D7EE900DC68AA /* BasicProjectWorldObserver.cpp */; };
@@ -60,8 +62,6 @@
 		37B17C171A6D0D5700B2D000 /* PopGenModelsSharedData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B17C131A6D0D5700B2D000 /* PopGenModelsSharedData.cpp */; };
 		37B17C181A6D0D5700B2D000 /* PopGenModelsWorldObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B17C141A6D0D5700B2D000 /* PopGenModelsWorldObserver.cpp */; };
 		37B17C1A1A6D0D7D00B2D000 /* PopGenModelsConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37B17C191A6D0D7D00B2D000 /* PopGenModelsConfigurationLoader.cpp */; };
-		37D631141A51BBAD003A7C62 /* libSDL_image-1.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D631131A51BBAD003A7C62 /* libSDL_image-1.2.0.dylib */; };
-		37D631161A51BBDD003A7C62 /* libSDL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D631151A51BBDD003A7C62 /* libSDL.dylib */; };
 		37E550CF184DE7400041C388 /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37E550CE184DE7400041C388 /* Geometry.cpp */; };
 		37ECDD17136AF6370037E7CE /* LandmarkObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37ECDD16136AF6370037E7CE /* LandmarkObject.cpp */; };
 		37F3D9251909BB430093536D /* ConfigurationLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37F3D9241909BB430093536D /* ConfigurationLoader.cpp */; };
@@ -152,6 +152,8 @@
 		3720BD060F7D149100D5FF81 /* WorldModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldModel.h; sourceTree = "<group>"; };
 		372B8E4D137B303B00E7276B /* DemoMedeaConfigurationLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoMedeaConfigurationLoader.h; sourceTree = "<group>"; };
 		372B8E4E137B305900E7276B /* DemoMedeaConfigurationLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DemoMedeaConfigurationLoader.cpp; sourceTree = "<group>"; };
+		37328BD41AD2B0F100085923 /* libSDL-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL-1.2.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl/1.2.15/lib/libSDL-1.2.0.dylib"; sourceTree = "<group>"; };
+		37328BD71AD2B15700085923 /* libSDL_image-1.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL_image-1.2.0.dylib"; path = "../../../../../../../usr/local/Cellar/sdl_image/1.2.12_1/lib/libSDL_image-1.2.0.dylib"; sourceTree = "<group>"; };
 		3749E172195D7EE000DC68AA /* BasicProjectAgentObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicProjectAgentObserver.h; sourceTree = "<group>"; };
 		3749E173195D7EE000DC68AA /* BasicProjectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicProjectController.h; sourceTree = "<group>"; };
 		3749E174195D7EE000DC68AA /* BasicProjectWorldObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicProjectWorldObserver.h; sourceTree = "<group>"; };
@@ -243,9 +245,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37D631161A51BBDD003A7C62 /* libSDL.dylib in Frameworks */,
+				37328BD81AD2B15700085923 /* libSDL_image-1.2.0.dylib in Frameworks */,
+				37328BD61AD2B10B00085923 /* libSDL-1.2.0.dylib in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				37D631141A51BBAD003A7C62 /* libSDL_image-1.2.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +326,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37328BD71AD2B15700085923 /* libSDL_image-1.2.0.dylib */,
+				37328BD41AD2B0F100085923 /* libSDL-1.2.0.dylib */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -929,7 +933,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
 					/users/nicolas/macports/lib/,
-					/Users/nicolas/macports/lib,
+					/usr/local/Cellar/sdl/1.2.15/lib,
+					/usr/local/Cellar/sdl_image/1.2.12_1/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = roborobo;
@@ -962,7 +967,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
 					/users/nicolas/macports/lib/,
-					/Users/nicolas/macports/lib,
+					/usr/local/Cellar/sdl/1.2.15/lib,
+					/usr/local/Cellar/sdl_image/1.2.12_1/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = roborobo;

@@ -87,6 +87,9 @@ A: do the following:
  Double click on the entry marked 'Header Search Paths'
  Add the path to the top level include folder. You should not select 'recursive'.
 
+Q: I use XCode 6 or later on my mac, roborobo fails during linking (error: "clang: error: linker command failed with exit code 1", and it says it cannot find libSDL-1.2.0.dylib and libSDL_image-1.2.0.dylib)...
+A: Installing SDL is not straight-forward with Xcode. Beyond installing the DMG files which you can get from the official SDL 1.2 web site, you also have to install it using port or brew. With brew, type "brew install sdl" and "brew install sdl_image", then go to Xcode, click on project name, select "Build phases", then "Link binary with libraries", and enter libSDL-1.2.0.dylib and libSDL_image-1.2.0.dylib there (typical paths: /usr/local/Cellar/sdl*). Note that if you already installed SDL with port, you may just have to change the path to libraries. More on installing SDL with brew/port: https://emulationonmac.wordpress.com/tag/sdl/
+
 Q: I use XCode 4 or later on my mac, roborobo always fail at start up when trying to load the config file…
 A: Xcode usually builds everything into a dedicated directory (e.g. $HOME/Library/Developer/Xcode/DerivedData/$PROJECT-$UUID (the full string looks ugly)). You have to set up symbolic link from this location to the config, logs and data directories. To do so:
   0. launch roborobo. It will exit immediately, but not before the location it is launched from is displayed on screen.

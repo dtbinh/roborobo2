@@ -49,7 +49,8 @@
       debugDocumentVersioning = "NO"
       debugXPCServices = "NO"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D1107260486CEB800E47090"
@@ -93,7 +94,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/medea-sandbox.properties"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/specialize-medea_default.properties"
@@ -105,7 +106,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/boids.properties"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-l config/popgenmodel_default.properties"
@@ -125,7 +126,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8D1107260486CEB800E47090"
