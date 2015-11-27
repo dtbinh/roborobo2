@@ -78,7 +78,7 @@ makefile-manager is a script that generates a makefile with only the project(s) 
 "./makefile-manager -h" displays usage help.
 
 Quick start: in the console, enter the following commands (set-up makefile, compile, and execute)
-    $ ./makefile-manager 
+    $ ./makefile-manager -l
     $ make  
     $ ./roborobo
 
