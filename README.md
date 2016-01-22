@@ -1,5 +1,9 @@
 
-IMPORTANT NOTICE: ROBOROBO.2 IS NOT MAINTAINED ANYMORE. PLEASE CONSIDER SWITCHING TO ROBOROBO.3.
+IMPORTANT NOTICE:
+=================
+
+### ROBOROBO.2 IS NOT MAINTAINED ANYMORE. PLEASE CONSIDER SWITCHING TO ROBOROBO.3. ###
+
 As of January 2016, ROBOROBO.3 is the most recent version. Please go to https://github.com/nekonaute/roborobo3
 Roborobo.2 will remain accessible as it is the last version that support SDL1.2 (SDL2 is used for roborobo.3)
 
